@@ -1,8 +1,14 @@
 # Capstone Project - Rhyme Remarks
-##### Author: Colby Ackerman
-##### Program: Savvy Coders
-##### Date: 07/11/2024
 
+### Author
+ Colby Ackerman
+### Program
+Savvy Coders
+### Date
+07/11/2024
+
+---
+---
 ---
 
 ## Definition Statement
@@ -44,17 +50,17 @@
 		- Elden Ring (DLC)
 		- Cocoon
 - Images
-	- ![selfie.jpg](/assets/images/selfie.jpg)
+	- ![selfie.jpg](/assets/planning/selfie_sm.jpg)
 	- *source: Myself*
 
 ### Contact Us
 - Page Overview
 	- Allows site users to send messages to the admins.
 - Text
-	- We'd love to hear from you.
-	- Name
-	- Email
-	- Message
+	- "We'd love to hear from you."
+	- "Name"
+	- "Email"
+	- "Message"
 - Images
 	- ![send.png](/assets/images/send.png)
 	- *source: Figma*
@@ -65,15 +71,18 @@
 		with them by clicking and highlighting to see word definitions and comment chains
 		about chunks. Reviews are viewable as well (5 star & comment).
 - Text
-	- Next
-	- Previous
-	- Reviews
-	- Dictionary
-	- Highlights
+	- "Next"
+	- "Previous"
+	- "Reviews"
+	- "Dictionary"
+	- "Highlights"
 	- **all other text is indeterminate*
 - Images
-	- ![scroll.png](/assets/images/scroll.png)
+	- ![scroll.png](/assets/planning/scroll_sm.png)
 	- *source: [url](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1d034f60-0f23-44a7-8284-3bc1c284fb7b/d9r7vof-29b20a84-59d0-4a5f-8ade-58bae1c128e0.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzFkMDM0ZjYwLTBmMjMtNDRhNy04Mjg0LTNiYzFjMjg0ZmI3YlwvZDlyN3ZvZi0yOWIyMGE4NC01OWQwLTRhNWYtOGFkZS01OGJhZTFjMTI4ZTAucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.nb_8DVSDvMQKcNBXwD8JRTo7G2aGUZIZwymor_5L38w)*
+- APIs
+	- [PoetryDB](https://poetrydb.org/index.html)
+	- [Merriam Webster Dictionary API](https://dictionaryapi.com/)
 
 ### Compose
 - Page Overview
@@ -82,21 +91,22 @@
 		will be reviewed by moderators before being accepted/rejected into
 		the pool of randomly accessible poems.
 - Text
-	- Author
-	- Request Publish
-	- Evoke your inner poet.
+	- "Author"
+	- "Request Publish"
+	- "Evoke your inner poet.
 		Remember formatting is preserved.
-		Your submission will be considered.
+		Your submission will be considered."
 
 ### Navigation Header (not a page)
 - Text
-	- About Me
-	- Contact Us
-	- Poems
-	- Compose
+	- "About Me"
+	- "Contact Us"
+	- "Poems"
+	- "Compose"
 
 - Images
-	- ![feather-pen-logo.png](/assets/images/logo.png) (links to homepage)
+	- ![feather-pen-logo.png](/assets/images/logo.png)
+	- (logo)
 	- *source: [url](https://images.rawpixel.com/image_png_social_square/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvam9iNjc3LTc0LXBfMS1sMTRvZWMzdC5wbmc.png)*
 
 
@@ -108,18 +118,19 @@
 	- Site Title: **Rhyme Remarks**
 
 - Color Palette
-	- #88958d
-	- #606d5d
-	- #bc9cb0
-	- #270b1a
-	- #ffffff
+	- `#88958d`
+	- `#606d5d`
+	- `#bc9cb0`
+	- `#270b1a`
+	- `#ffffff`
 
 - Fonts
-	- Roboto, sans-serif
-	- Caveat, serif
+	- `Roboto`, `sans-serif`
+	- `Caveat`, `serif`
 
 ## User Story Map
-- [Mural - Rhyme Remarks - Col Ackerman](https://app.mural.co/t/savvy9661/m/savvy9661/1719450775679/2d39ece1c17f24b03d7d766fdc187b03ab1f048a?sender=uef98c7209a75e9f938b23293)
+![](https://cdn.prod.website-files.com/62e11362da2667ac3d0e6ed5/63f8b1b0585b45a64baf52da_Mural_Favicon_32x32.png)
+[ural - Rhyme Remarks - Col Ackerman](https://app.mural.co/t/savvy9661/m/savvy9661/1719450775679/2d39ece1c17f24b03d7d766fdc187b03ab1f048a?sender=uef98c7209a75e9f938b23293)
 
 ## Inspiration
 - [Genius Lyrics](https://genius.com/Foo-fighters-everlong-lyrics)
@@ -148,22 +159,21 @@ system.*
 
 
 ## Diagrams
-- Wireframes
-	- Home
-		- ![home-diagram](/assets/planning/Home%20Page.png)
-	- About Me
-		- ![about-me-diagram](/assets/planning/About%20Me%20Page.png)
-	- Contact Us
-		- ![contact-us-diagram](/assets/planning/Contact%20Us%20Page.png)
-	- Poems
-		- ![poems-diagram](/assets/planning/Poems%20Page.png)
-	- Compose
-		- ![compose-diagram](/assets/planning/Compose%20Page.png)
-- User Flow Diagram
-	- TODO
+
+### Wireframes
+- Home Page
+![home-diagram](/assets/planning/Home%20Page.png)
+- About Me Page
+![about-me-diagram](/assets/planning/About%20Me%20Page.png)
+- Contact Us Page
+![contact-us-diagram](/assets/planning/Contact%20Us%20Page.png)
+- Poems Page
+![poems-diagram](/assets/planning/Poems%20Page.png)
+- Compose Page
+![compose-diagram](/assets/planning/Compose%20Page.png)
+
+### User Flow Diagrams
+![flow-diagrams](/assets/planning/flow_diagrams.png)
 
 ## SWOT Analysis
-- Strengths
-- Weaknesses
-- Opportunities
-- Threats
+- [Google Doc](https://docs.google.com/document/d/13N495aSBQ9e2OsTIVJOLQH5skllZdi0WA20p7k1TM5w/edit?usp=sharing)
