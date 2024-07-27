@@ -11,20 +11,26 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="css/about.css" />
+    <link rel="stylesheet" href="css/poems.css" />
+    <script defer src="js/poems.js"></script>
   </head>
   <body>
     <header>
       <nav>
         <a href="/index.html">Home</a>
-        <a href="/about.html" class="active-link">About</a>
+        <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>
-        <a href="/poems.html">Poems</a>
+        <a href="/poems.html" class="active-link">Poems</a>
         <a href="/compose.html">Compose</a>
       </nav>
     </header>
     <main>
-      What do you want to know?
+      <div id="poems-container">
+        <h3 id="poem-title">Filler Title</h3>
+        <h5 id="poem-author">Filler Author</h5>
+        <p id="poem-text">filler paragraph</p>
+        <button id="poem-next">Next</button>
+      </div>
     </main>
     <footer>
       Made you look.
