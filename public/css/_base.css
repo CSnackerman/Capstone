@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box;
+  font-family: sans-serif;
+
+  --side-margin: 1rem;
+}
+
+:root {
+  --primary-color: white;
+  --secondary-bg: #88958d;
+  --primary-bg: #606d5d;
+  --logo-color: #270b1a;
+  --accent-color: #bc9cb0;
+}
+
+@media (width < 500px) {
+  :root {
+    font-size: 12px;
+  }
+}
+
+@media (width >= 2560px) {
+  :root {
+    font-size: 26px;
+  }
+}
+
+html,
+body {
+  height: 100svh;
+  margin: 0;
+  background-color: var(--primary-bg);
+  color: var(--primary-color);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 1rem 0;
+  background-color: var(--secondary-bg);
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 var(--side-margin);
+  padding-right: 10rem;
+}
+
+nav > a {
+  text-decoration: none;
+  font-size: 1;
+  padding: 0.5rem;
+}
+
+nav > .active-link {
+  font-weight: bold;
+  scale: 1.2;
+}
+
+nav > a:visited {
+  color: var(--primary-color);
+}
+
+nav > a:hover {
+  scale: 1.2;
+}
+
+main {
+  flex: 1;
+  margin: var(--side-margin);
+}
+
+footer {
+  padding: var(--side-margin);
+  background-color: var(--secondary-bg);
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+textarea {
+  all: unset;
+  box-sizing: border-box;
+  color: black;
+  background-color: white;
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+}
