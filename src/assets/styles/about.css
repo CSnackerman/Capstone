@@ -1,0 +1,55 @@
+#about-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+  width: max-content;
+}
+
+#about-view > div {
+  margin: 2rem 0 0.5rem 0;
+}
+
+#about-view > div:last-of-type {
+  margin: 0;
+  margin-top: 5rem;
+}
+
+#about-view > img {
+  margin: 2rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: 0 -60px;
+  border-radius: 100%;
+  border: 3px solid var(--logo-color);
+  box-shadow: 0 0 1rem var(--logo-color);
+}
+
+#about-view > a {
+  align-self: center;
+  margin: 2rem;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  animation: party 10s linear infinite;
+}
+
+#about-view > a:visited {
+  color: cyan;
+}
+
+#about-view > a:hover {
+  scale: 1.2;
+  animation: party 200ms linear infinite;
+}
+
+#about-view > iframe {
+  all: unset;
+  align-self: center;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: 1px solid black;
+  border-radius: 0.3rem;
+  overflow: hidden;
+  filter: saturate(50%);
+}

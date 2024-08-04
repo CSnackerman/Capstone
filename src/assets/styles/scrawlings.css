@@ -1,0 +1,23 @@
+@keyframes scrolldown {
+  to {
+    transform: translateY(-1000px);
+  }
+}
+
+#scrawlings {
+  font-family: 'Great Vibes', cursive;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 110%;
+  overflow: hidden;
+  z-index: -1;
+  color: #ffffff25;
+  line-height: 1.5;
+  letter-spacing: 1.4;
+  font-size: 1.1rem;
+  animation: scrolldown 100s linear infinite;
+  filter: blur(1px);
+  user-select: none;
+  pointer-events: none;
+}

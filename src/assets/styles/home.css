@@ -1,0 +1,21 @@
+#home-view {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  line-height: 2;
+}
+
+#home-view > h1 {
+  font-weight: normal;
+  font-size: 3rem;
+}
+
+#home-view > h1 > b {
+  font-weight: 900;
+}
+
+#home-view > div {
+  align-self: center;
+  width: fit-content;
+}
