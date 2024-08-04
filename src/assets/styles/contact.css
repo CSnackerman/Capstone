@@ -1,8 +1,4 @@
-@import url('./_base.css');
-
-/* contact page */
-
-.contact-container {
+#contact-view {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,51 +7,62 @@
   gap: 2rem;
 }
 
-.contact-container > h1 {
+#contact-view > h1 {
   text-align: center;
 }
 
-.contact-container > form {
+#contact-form {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: min(75%, 800px);
+  width: min(50vw, 800px);
   height: 60%;
 }
 
-.contact-container > form > div {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  column-gap: 0.2rem;
-  row-gap: 0.5rem;
+#contact-form > div {
+  display: flex;
+  column-gap: 0.5rem;
   align-items: center;
 }
 
-.contact-container textarea {
+#contact-form > div:last-of-type {
+  flex-direction: column;
+  align-items: start;
+  row-gap: 0.3rem;
+  width: 100%;
+}
+
+#contact-form textarea {
   grid-row: 2;
   grid-column: 1/9;
   resize: none;
   height: 25vh;
+  width: 100%;
   overflow-x: hidden;
 }
 
-.contact-container label {
+#contact-form label {
   font-size: 1.2rem;
   max-width: 3rem;
 }
 
-.contact-container input {
-  grid-column: 2/5;
+#contact-form input:not(input[type='submit']) {
+  max-width: 20vw;
 }
 
 @media (width < 500px) {
-  .contact-container input {
+  #contact-form input {
     grid-column: 2/9;
   }
 }
 
-.contact-container input[type='submit'] {
+#contact-form input[type='submit'] {
   padding: 0.2rem 0.5rem;
   width: fit-content;
   margin-left: auto;
+}
+
+#brain {
+  padding: 1rem;
+  filter: sepia(0.9);
 }
