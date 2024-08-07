@@ -1,9 +1,9 @@
 import { default as loadingSpinner } from './loadingSpinner';
 import { default as poems } from './poems';
 
-const state = {
+const store = {
   poems,
   loadingSpinner,
 };
 
-export default state;
+export default store;

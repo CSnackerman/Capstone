@@ -1,12 +1,16 @@
 import html from 'html-literal';
 import Navigo from 'navigo';
-
-import { footer, header, loadingSpinner } from './components';
-import { updateActiveNavigation } from './components/header';
-import state from './store/_index';
+import {
+  footer,
+  header,
+  loadingSpinner,
+  mainContent,
+} from './components/_index';
+import { updateActiveNavigation } from './components/nav';
+import store from './store/_index';
 import views, { poemHooks } from './views/_index';
 
-export const app = document.getElementById('app');
+const app = document.getElementById('app');
 
 export const router = new Navigo('/');
 
@@ -19,18 +23,24 @@ const prerender = (state) => {
 }
 
 // prettier-ignore
-const render = (view) => () =>
-  (app.innerHTML = html`
+export const render = (view) => {
+  app.innerHTML = html`
     ${header()}
-    <main>${views[view]()}</main>
+    ${mainContent(views[view]())}
     ${footer()}
-  `);
+  `;
+
+  router.updatePageLinks();
+}
 
 // common hooks
 router.hooks({
   before(done) {
-    prerender(state);
+    prerender(store);
     done();
+  },
+  already(match) {
+    render(match.url);
   },
   after(match) {
     updateActiveNavigation(match);
@@ -38,11 +48,9 @@ router.hooks({
 });
 
 router
-  .on('/', render('home'))
-  .on('/about', render('about'))
-  .on('/contact', render('contact'))
-  .on('/poems', render('poems'), poemHooks)
-  .on('/compose', render('compose'))
+  .on('/', () => render('home'))
+  .on('/about', () => render('about'))
+  .on('/contact', () => render('contact'))
+  .on('/poems', () => render('poems'), poemHooks)
+  .on('/compose', () => render('compose'))
   .resolve();
-
-console.log('/' + router.getCurrentLocation().url);

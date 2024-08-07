@@ -1,11 +1,12 @@
 import html from 'html-literal';
-import { fetchDictionaryDefinition } from '../api/dictionary';
-import { audioPlayer } from '../components';
+import { router } from '..';
+import { audioPlayer } from '../components/_index';
 import { setAudioSource } from '../components/audioPlayer';
-import state from '../store/_index';
+import { fetchDictionaryDefinition } from '../network/dictionary';
+import store from '../store/_index';
 
 export default () => {
-  const { stack, index } = state.poems;
+  const { stack, index } = store.poems;
   const { title, author, content } = stack[index];
 
   // prettier-ignore
@@ -27,8 +28,8 @@ export default () => {
 
 export const poemHooks = {
   async before(done) {
-    if (state.poems.index === -1) {
-      await state.poems.next();
+    if (store.poems.index === -1) {
+      await store.poems.next();
     }
 
     done();
@@ -49,13 +50,13 @@ export const poemHooks = {
     });
 
     nextBtn.addEventListener('click', async () => {
-      await state.poems.next();
-      updateDOM();
+      await store.poems.next();
+      router.navigate('/poems');
     });
 
     prevBtn.addEventListener('click', () => {
-      state.poems.previous();
-      updateDOM();
+      store.poems.previous();
+      router.navigate('/poems');
     });
 
     poemContent.addEventListener('click', async (e) => {
@@ -74,9 +75,9 @@ export const poemHooks = {
 
 // util
 
-function updateDOM() {
-  const { stack, index } = state.poems;
-  document.getElementById('poem-title').textContent = stack[index].title;
-  document.getElementById('poem-author').textContent = stack[index].author;
-  document.getElementById('poem-content').innerHTML = stack[index].content;
-}
+// function updateDOM() {
+//   const { stack, index } = store.poems;
+//   document.getElementById('poem-title').textContent = stack[index].title;
+//   document.getElementById('poem-author').textContent = stack[index].author;
+//   document.getElementById('poem-content').innerHTML = stack[index].content;
+// }

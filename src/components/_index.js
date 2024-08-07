@@ -5,4 +5,5 @@ export { default as ctxReviews } from './ctxReviews';
 export { default as footer } from './footer';
 export { default as header } from './header';
 export { default as loadingSpinner } from './loadingSpinner';
+export { default as mainContent } from './mainContent';
 export { default as scrawlings } from './scrawlings';

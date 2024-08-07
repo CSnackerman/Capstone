@@ -1,11 +1,12 @@
-import { fetchRandomPoem } from '../api/poetrydb';
+import { fetchRandomPoem } from '../network/poetrydb';
 
 export default {
   stack: [],
   index: -1,
   async next() {
     if (this.index === this.stack.length - 1) {
-      await fetchRandomPoem();
+      const poem = await fetchRandomPoem();
+      this.stack.push(poem);
     }
     this.index++;
   },
