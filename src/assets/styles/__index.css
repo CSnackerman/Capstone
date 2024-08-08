@@ -1,5 +1,6 @@
 @import '/node_modules/normalize.css/normalize.css';
 @import '_fonts.css';
+@import '_animations.css';
 @import '_core.css';
 @import 'nav.css';
 @import 'home.css';
@@ -9,3 +10,4 @@
 @import 'compose.css';
 @import 'loading.css';
 @import 'scrawlings.css';
+@import 'notFound.css';

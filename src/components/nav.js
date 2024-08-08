@@ -18,9 +18,9 @@ export default () => {
 export function updateActiveNavigation(match) {
   const path = match.route.path;
   const tagId = path ? 'nav-' + path : 'nav-home';
-  const css_class = 'active-link';
+  const navActiveLink = 'active-link';
   document.querySelectorAll('nav > a').forEach((a) => {
-    a.classList.remove(css_class);
+    a.classList.remove(navActiveLink);
   });
-  document.getElementById(tagId).classList.add(css_class);
+  document.getElementById(tagId)?.classList.add(navActiveLink);
 }

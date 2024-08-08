@@ -1,0 +1,71 @@
+#not-found-view {
+  position: relative;
+  font-size: 3rem;
+}
+
+#not-found-view > h5 {
+  font-family: monospace;
+  font-weight: normal;
+}
+
+#qmark {
+  display: inline-block;
+  margin-left: 2rem;
+  color: white;
+  animation: pulse 330ms ease-in-out infinite alternate,
+    spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+#not-found-view > hr {
+  position: absolute;
+  margin: 0;
+  top: 0;
+  left: -150vw;
+  width: 75vw;
+  border-color: silver;
+  overflow: -moz-hidden-unscrollable;
+  animation: slide 1s ease-in-out infinite alternate;
+}
+
+#not-found-view > hr:nth-of-type(1) {
+  top: -1rem;
+  animation-delay: 0;
+}
+#not-found-view > hr:nth-of-type(2) {
+  top: -2rem;
+  animation-delay: 100ms;
+}
+#not-found-view > hr:nth-of-type(3) {
+  top: -3rem;
+  animation-delay: 200ms;
+}
+#not-found-view > hr:nth-of-type(4) {
+  top: calc(100% + 1rem);
+  animation-delay: 300ms;
+}
+#not-found-view > hr:nth-of-type(5) {
+  top: calc(100% + 2rem);
+  animation-delay: 400ms;
+}
+#not-found-view > hr:nth-of-type(6) {
+  top: calc(100% + 3rem);
+  animation-delay: 500ms;
+}
+
+#head-back {
+  position: fixed;
+  top: 75vh;
+  font-size: 3rem;
+  display: block;
+  margin-top: 3rem;
+  width: max-content;
+  text-align: center;
+}
+
+#head-back:visited {
+  color: lime;
+}
+
+#head-back:hover {
+  color: greenyellow;
+}

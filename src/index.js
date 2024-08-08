@@ -9,6 +9,7 @@ import {
 import { updateActiveNavigation } from './components/nav';
 import store from './store/_index';
 import views, { poemHooks } from './views/_index';
+import { notFoundHooks } from './views/notFound';
 
 const app = document.getElementById('app');
 
@@ -53,4 +54,5 @@ router
   .on('/contact', () => render('contact'))
   .on('/poems', () => render('poems'), poemHooks)
   .on('/compose', () => render('compose'))
+  .notFound(() => render('notFound'), notFoundHooks)
   .resolve();
