@@ -1,83 +1,100 @@
 import html from 'html-literal';
-import { router } from '..';
-import { audioPlayer } from '../components/_index';
+import { rerender } from '..';
+import { ctxComponent, poem } from '../components/_index';
 import { setAudioSource } from '../components/audioPlayer';
-import { fetchDictionaryDefinition } from '../network/dictionary';
+import { addExitContextListener } from '../components/ctxComponents/ctxComponent';
+import { loadSpin } from '../components/loadingSpinner';
+import { reload } from '../router';
 import store from '../store/_index';
 
-export default () => {
-  const { stack, index } = store.poems;
-  const { title, author, content } = stack[index];
+const { dictionary, loadingSpinner, poems } = store;
 
+export default () => {
   // prettier-ignore
-  return html`
-    <div id="poem-view">
-      ${audioPlayer()}
-      <h3 id="poem-title">${title}</h3>
-      <h5 id="poem-author">${author}</h5>
-      <pre id="poem-content">${content}</pre>
-      <div id="poem-buttons">
-        <button id="poem-prev">Previous</button>
-        <button id="poem-next">Next</button>
-      </div>
-    </div>
-  `;
+  return poems.noContext()
+    ? html`
+        <div id="poems-view" class="noncontextual">
+          ${poem()}
+        </div>
+      `
+    : html`
+        <div id="poems-view" class="contextual">
+          ${poem()} 
+          ${ctxComponent()}
+        </div>
+      `;
 };
 
-// hooks
+// ---
 
 export const poemHooks = {
   async before(done) {
-    if (store.poems.index === -1) {
-      await store.poems.next();
+    if (poems.index === -1) {
+      loadingSpinner.enable();
+      rerender();
+      await poems.next();
+      loadingSpinner.disable();
     }
 
     done();
   },
+  already() {
+    poemHooks.after();
+  },
   after() {
-    const poemView = document.getElementById('poem-view');
     const nextBtn = document.getElementById('poem-next');
     const prevBtn = document.getElementById('poem-prev');
     const poemContent = document.getElementById('poem-content');
 
-    poemView.addEventListener('mouseup', () => {
+    // highlighted text
+    poemContent.addEventListener('mouseup', () => {
       const selection = document.getSelection();
       const selectedText = selection.toString();
 
       if (selectedText) {
+        poems.setRemarksContext();
         console.log(selection.toString()); // todo
       }
     });
 
+    // next
     nextBtn.addEventListener('click', async () => {
-      await store.poems.next();
-      router.navigate('/poems');
+      loadSpin();
+
+      await poems.next();
+      reload();
     });
 
+    // prev
     prevBtn.addEventListener('click', () => {
-      store.poems.previous();
-      router.navigate('/poems');
+      if (poems.previous()) {
+        reload();
+      }
     });
 
+    // word click
     poemContent.addEventListener('click', async (e) => {
       const isSpan = e.target instanceof HTMLSpanElement;
-
       if (!isSpan) {
         return;
       }
 
       const word = e.target.textContent;
+
+      if (word === dictionary.selected) {
+        return;
+      }
+
+      poems.setDictionaryContext();
+
+      loadSpin();
+
+      await dictionary.lookup(word);
+
+      reload();
+
       setAudioSource(word);
-      await fetchDictionaryDefinition(word);
+      addExitContextListener();
     });
   },
 };
-
-// util
-
-// function updateDOM() {
-//   const { stack, index } = store.poems;
-//   document.getElementById('poem-title').textContent = stack[index].title;
-//   document.getElementById('poem-author').textContent = stack[index].author;
-//   document.getElementById('poem-content').innerHTML = stack[index].content;
-// }

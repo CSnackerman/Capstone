@@ -1,0 +1,73 @@
+.ctx-component {
+  position: relative;
+  text-align: center;
+  background-image: linear-gradient(45deg, #2e150ba1, rgb(48, 27, 12));
+  border: 10px ridge #a38c6dbe;
+  padding: 0.5rem;
+  max-height: min-content;
+  color: lightgoldenrodyellow;
+  border-radius: 5px;
+  /* overflow: hidden; */
+}
+
+#ctx-title {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+#exit-btn {
+  position: absolute;
+  right: 1rem;
+}
+
+#exit-btn:hover {
+  filter: brightness(1.5);
+  cursor: pointer;
+}
+
+/* dicionary */
+
+.ctx-dictionary {
+  text-align: start;
+  font-weight: normal;
+}
+
+#scrollable-defs {
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-right: 10px;
+}
+
+#word {
+  font-size: 1.3rem;
+}
+
+#pos {
+  font-weight: normal;
+  font-family: monospace;
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+#def-list {
+  list-style: lower-roman;
+  list-style-position: outside;
+
+  line-height: 1.3rem;
+}
+
+#def {
+  font-family: serif;
+  font-size: 0.9rem;
+}
+
+/* reviews */
+
+#ctx-reviews {
+}
+
+/* remarks */
+
+#ctx-remarks {
+}

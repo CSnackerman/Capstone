@@ -4,5 +4,31 @@ export async function fetchDictionaryDefinition(word) {
   );
   const json = await res.json();
 
-  console.log(json);
+  const definitions = drillDefinitions(json);
+
+  return {
+    word,
+    definitions,
+  };
+}
+
+function drillDefinitions(json) {
+  if (!Array.isArray(json)) return { definitions: ['not found'] };
+
+  return json
+    .map((entry) => entry.meanings)
+    .map((meaning) =>
+      meaning.map((m) => ({
+        partOfSpeech: m.partOfSpeech,
+        definitions: m.definitions.map((d) => d.definition),
+      }))
+    )
+    .flat()
+    .reduce((acc, cur) => {
+      const pos = cur.partOfSpeech;
+      return {
+        ...acc,
+        [pos]: [...(acc[pos] ?? []), ...(cur.definitions ?? [])],
+      };
+    }, {});
 }

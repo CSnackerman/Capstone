@@ -12,12 +12,21 @@ export default () => {
             id="title"
             name="title"
             type="text"
-            placeholder="${placeholderTitle}"
+            placeholder="Invitation"
             required
           />
         </div>
         <div>
-          <textarea placeholder="${placeholderContent}" required></textarea>
+          <textarea
+            placeholder="If you are a dreamer, come in,
+              If you are a dreamer, a wisher, a liar,
+              A hope-er, a pray-er, a magic bean buyer...
+              If you're a pretender, come sit by my fire
+              For we have some flax-golden tales to spin.
+              Come in!
+              Come in!"
+            required
+          ></textarea>
           <div id="info-container">
             <img id="info-icon" src=${infoSvg} />
             <div id="tooltip-container">
@@ -39,7 +48,7 @@ export default () => {
               id="author"
               name="author"
               type="text"
-              placeholder="${placeholderAuthor}"
+              placeholder="Shel Silverstein"
               required
             />
           </div>
@@ -49,15 +58,3 @@ export default () => {
     </div>
   `;
 };
-
-const placeholderTitle = 'Invitation';
-const placeholderAuthor = 'Shel Silverstein';
-const placeholderContent = `
-If you are a dreamer, come in,
-If you are a dreamer, a wisher, a liar,
-A hope-er, a pray-er, a magic bean buyer...
-If you're a pretender, come sit by my fire
-For we have some flax-golden tales to spin.
-Come in!
-Come in!
-`;

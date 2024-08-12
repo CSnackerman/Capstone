@@ -6,8 +6,10 @@
 @import 'home.css';
 @import 'about.css';
 @import 'contact.css';
+@import 'poem.css';
 @import 'poems.css';
 @import 'compose.css';
 @import 'loading.css';
 @import 'scrawlings.css';
 @import 'notFound.css';
+@import 'ctx.css';

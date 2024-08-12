@@ -12,12 +12,18 @@
 
 @keyframes spin {
   to {
-    rotate: (360deg);
+    rotate: 360deg;
   }
 }
 
 @keyframes slide {
   to {
     transform: translateX(300vw);
+  }
+}
+
+@keyframes grow {
+  to {
+    scale: 2;
   }
 }

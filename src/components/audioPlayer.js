@@ -7,8 +7,6 @@ export default () => {
   `;
 };
 
-// util
-
 export function setAudioSource(word) {
   document.getElementById('speaker-icon').onclick = async () => {
     const utterance = new SpeechSynthesisUtterance(word.toLowerCase());
