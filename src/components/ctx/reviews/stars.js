@@ -15,35 +15,35 @@ export default (id) => {
         id="star-1"
         class="star"
         src=${getStarSrc(1)}
-        alt="star-empty"
+        alt="${getStarAlt(1)}"
         width="${starWidth}"
       />
       <img
         id="star-2"
         class="star"
         src=${getStarSrc(2)}
-        alt="star-empty"
+        alt="${getStarAlt(2)}"
         width="${starWidth}"
       />
       <img
         id="star-3"
         class="star"
         src=${getStarSrc(3)}
-        alt="star-empty"
+        alt="${getStarAlt(3)}"
         width="${starWidth}"
       />
       <img
         id="star-4"
         class="star"
         src=${getStarSrc(4)}
-        alt="star-empty"
+        alt="${getStarAlt(4)}"
         width="${starWidth}"
       />
       <img
         id="star-5"
         class="star"
         src=${getStarSrc(5)}
-        alt="star-empty"
+        alt="${getStarAlt(5)}"
         width="${starWidth}"
       />
     </div>
@@ -59,13 +59,13 @@ export function addStarListeners() {
     star.addEventListener('mouseover', (e) => {
       const targetStarNumber = getStarNumber(e.target);
       for (const star of starElements) {
-        assignStarSrc(star, targetStarNumber);
+        assignStarAttributes(star, targetStarNumber);
       }
     });
     // un-hover
     star.addEventListener('mouseout', () => {
       for (const star of starElements) {
-        assignStarSrc(star, currentRating);
+        assignStarAttributes(star, currentRating);
       }
     });
     // click
@@ -85,16 +85,23 @@ function getStarNumber(star) {
   return parseInt(star.id.split('-').slice(-1));
 }
 
-function assignStarSrc(star, threshold) {
+function assignStarAttributes(star, threshold) {
   const starNumber = getStarNumber(star);
   if (starNumber <= threshold) {
     star.src = starFilledSvg;
+    star.alt = 'star-filled';
   } else {
     star.src = starEmptySvg;
+    star.alt = 'star-empty';
   }
 }
 
 function getStarSrc(starId) {
   const currentRating = stars.getRatingByTitle(poems.getTitle());
   return starId <= currentRating ? starFilledSvg : starEmptySvg;
+}
+
+function getStarAlt(starId) {
+  const currentRating = stars.getRatingByTitle(poems.getTitle());
+  return starId <= currentRating ? 'star-filled' : 'star-empty';
 }
