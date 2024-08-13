@@ -2,6 +2,6 @@ import html from 'html-literal';
 
 export default () => {
   return html`
-    <div id="ctx-dictionary">Dictionary Context</div>
+    <div id="ctx-reviews" class="ctx-component">Review Context</div>
   `;
 };

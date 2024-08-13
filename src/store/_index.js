@@ -1,9 +1,17 @@
-import { default as loadingSpinner } from './loadingSpinner';
-import { default as poems } from './poems';
+import dictionary from './dictionary';
+import loadingSpinner from './loadingSpinner';
+import poems from './poems';
+import remarks from './remarks';
+import reviews from './reviews';
+import stars from './stars';
 
-const state = {
+const store = {
   poems,
   loadingSpinner,
+  dictionary,
+  reviews,
+  remarks,
+  stars,
 };
 
-export default state;
+export default store;

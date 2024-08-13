@@ -1,5 +1,5 @@
 import html from 'html-literal';
-import { scrawlings } from '../components';
+import { scrawlings } from '../components/_index';
 
 export default () => {
   return html`

@@ -23,12 +23,6 @@
   }
 }
 
-@keyframes party {
-  to {
-    filter: hue-rotate(360deg);
-  }
-}
-
 html,
 body {
   margin: 0;
@@ -44,6 +38,7 @@ body {
   height: 100svh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 main {
@@ -56,6 +51,7 @@ main {
 }
 
 footer {
+  width: 100%;
   text-align: end;
   padding: var(--side-margin);
   background-color: var(--secondary-bg);

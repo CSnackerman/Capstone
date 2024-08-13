@@ -1,6 +1,5 @@
 #compose-view {
-  width: 85%;
-  max-width: 900px;
+  width: min(80vw, 800px);
 }
 
 #compose-view > form {
@@ -28,6 +27,10 @@
   height: 50svh;
   overflow-y: auto;
   scrollbar-width: thin;
+}
+
+#compose-view > form input[type='submit'] {
+  align-self: end;
 }
 
 #info-container {

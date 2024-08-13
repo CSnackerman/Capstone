@@ -6,7 +6,8 @@
   "scripts": {
     "start": "parcel",
     "build": "parcel build",
-    "format": "prettier src --write"
+    "format": "prettier src --write",
+    "clean": "rimraf .parcel-cache dist"
   },
   "keywords": [
     "rhyme",
@@ -26,7 +27,8 @@
     "globals": "^15.8.0",
     "node": "^16.13.1",
     "parcel": "^2.12.0",
-    "prettier": "1.19.1"
+    "prettier": "1.19.1",
+    "rimraf": "^6.0.1"
   },
   "dependencies": {
     "html-literal": "^1.1.0",

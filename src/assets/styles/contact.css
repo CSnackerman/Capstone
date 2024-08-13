@@ -21,7 +21,7 @@
 
 #contact-form > div {
   display: flex;
-  column-gap: 0.5rem;
+  column-gap: 1.5rem;
   align-items: center;
 }
 
@@ -65,4 +65,16 @@
 #brain {
   padding: 1rem;
   filter: sepia(0.9);
+}
+
+#name-field > label::after {
+  content: '*';
+  padding: 0.2rem;
+  color: red;
+}
+
+#message-field > label::after {
+  content: '*';
+  padding: 0.2rem;
+  color: red;
 }
