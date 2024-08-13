@@ -30,6 +30,9 @@ export default {
   empty() {
     return this.stack.length === 0 && this.index === -1;
   },
+  atFirst() {
+    return this.index === 0;
+  },
   clearContext() {
     this.context = undefined;
   },

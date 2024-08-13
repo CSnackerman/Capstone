@@ -100,6 +100,15 @@ button {
 }
 
 input[type='submit']:hover,
-button:hover {
+button:hover:not(:disabled) {
   background-color: var(--accent-color);
+}
+
+button:disabled {
+  filter: brightness(0.7);
+  opacity: 0.5;
+}
+
+button:hover:disabled {
+  cursor: not-allowed;
 }
