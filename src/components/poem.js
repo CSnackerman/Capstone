@@ -26,7 +26,9 @@ export default () => {
       </div>
       <pre id="poem-content">${content}</pre>
       <div id="poem-buttons">
-        <button id="poem-prev">Previous</button>
+        <button id="poem-prev" ${poems.atFirst() ? 'disabled' : ''}>
+          Previous
+        </button>
         <button id="poem-next">Next</button>
       </div>
     </div>
