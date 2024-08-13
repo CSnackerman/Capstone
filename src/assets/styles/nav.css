@@ -5,6 +5,7 @@ header {
   padding: 0.2rem 0;
   background-color: var(--secondary-bg);
   box-shadow: 0px 0px 2vh #00000088;
+  z-index: 1000;
 }
 
 nav {
@@ -33,6 +34,7 @@ nav > a {
   text-decoration: none;
   font-size: 1.2rem;
   padding: 0.5rem;
+  min-width: max-content;
 }
 
 nav > .active-link {

@@ -50,7 +50,7 @@ export function addPoemListeners() {
   });
 
   // highlighted text
-  poemContent.addEventListener('mouseup', () => {
+  poemContent.addEventListener('pointerup', () => {
     const selection = document.getSelection();
     const selectedText = selection.toString();
 
