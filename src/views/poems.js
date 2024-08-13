@@ -1,7 +1,7 @@
 import html from 'html-literal';
 import { rerender } from '..';
 import { ctxComponent, poem } from '../components/_index';
-import { setAudioSource } from '../components/audioPlayer';
+import { setAudioUtterance } from '../components/audioPlayer';
 import { addExitContextListener } from '../components/ctxComponents/ctxComponent';
 import { loadSpin } from '../components/loadingSpinner';
 import { reload } from '../router';
@@ -45,6 +45,8 @@ export const poemHooks = {
     const nextBtn = document.getElementById('poem-next');
     const prevBtn = document.getElementById('poem-prev');
     const poemContent = document.getElementById('poem-content');
+
+    poems.restoreContext();
 
     // highlighted text
     poemContent.addEventListener('mouseup', () => {
@@ -93,7 +95,7 @@ export const poemHooks = {
 
       reload();
 
-      setAudioSource(word);
+      setAudioUtterance('dictionary-audio-player', word);
       addExitContextListener();
     });
   },

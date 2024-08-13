@@ -58,7 +58,7 @@
   color: white;
 }
 
-#speaker-icon {
+.audio-player {
   width: 1.7rem;
   aspect-ratio: 1;
   padding: 0.15rem;
@@ -68,6 +68,6 @@
   user-select: none;
 }
 
-#speaker-icon:hover {
+.audio-player:hover {
   filter: brightness(1.3);
 }

@@ -1,4 +1,7 @@
+import { setAudioUtterance } from '../components/audioPlayer';
+import { addExitContextListener } from '../components/ctxComponents/ctxComponent';
 import { fetchRandomPoem } from '../network/poetrydb';
+import store from './_index';
 
 export default {
   stack: [],
@@ -38,5 +41,11 @@ export default {
   },
   noContext() {
     return !this.context;
+  },
+  restoreContext() {
+    if (this.context === 'Dictionary' && store.dictionary.word) {
+      setAudioUtterance('dictionary-audio-player', store.dictionary.word);
+      addExitContextListener();
+    }
   },
 };

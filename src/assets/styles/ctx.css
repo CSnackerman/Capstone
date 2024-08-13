@@ -7,7 +7,6 @@
   max-height: min-content;
   color: lightgoldenrodyellow;
   border-radius: 5px;
-  /* overflow: hidden; */
 }
 
 #ctx-title {
@@ -37,6 +36,12 @@
   overflow-y: auto;
   scrollbar-width: thin;
   padding-right: 10px;
+}
+
+#word-audio-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 #word {

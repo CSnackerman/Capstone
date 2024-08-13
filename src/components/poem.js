@@ -1,6 +1,5 @@
 import html from 'html-literal';
 import store from '../store/_index';
-import audioPlayer from './audioPlayer';
 
 export default () => {
   const poem = store.poems.getPoem();
@@ -10,7 +9,6 @@ export default () => {
 
   return html`
     <div id="poem">
-      ${audioPlayer()}
       <h3 id="poem-title">${title}</h3>
       <h5 id="poem-author">${author}</h5>
       <pre id="poem-content">${content}</pre>
