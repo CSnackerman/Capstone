@@ -1,5 +1,5 @@
 import { setAudioUtterance } from '../components/audioPlayer';
-import { addExitContextListener } from '../components/ctxComponents/ctxComponent';
+import { addExitContextListener } from '../components/ctx/ctxComponent';
 import { fetchRandomPoem } from '../network/poetrydb';
 import store from './_index';
 
@@ -9,6 +9,9 @@ export default {
   context: undefined,
   getPoem() {
     return this.empty() ? {} : this.stack[this.index];
+  },
+  getTitle() {
+    return this.empty() ? '' : this.stack[this.index].title;
   },
   async next() {
     if (this.index === this.stack.length - 1) {
@@ -45,7 +48,8 @@ export default {
   restoreContext() {
     if (this.context === 'Dictionary' && store.dictionary.word) {
       setAudioUtterance('dictionary-audio-player', store.dictionary.word);
-      addExitContextListener();
     }
+
+    addExitContextListener();
   },
 };

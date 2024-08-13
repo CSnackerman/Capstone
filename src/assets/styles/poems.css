@@ -2,6 +2,12 @@
   width: 100%;
 }
 
+#author-review-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .contextual {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -12,4 +18,14 @@
 
 .noncontextual {
   display: block;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  width: min-content;
+}
+
+.star:hover {
+  cursor: pointer;
 }

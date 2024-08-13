@@ -1,8 +1,9 @@
 export { default as audioPlayer } from './audioPlayer';
-export { default as ctxComponent } from './ctxComponents/ctxComponent';
-export { default as ctxDictionary } from './ctxComponents/ctxDictionary';
-export { default as ctxRemarks } from './ctxComponents/ctxRemarks';
-export { default as ctxReviews } from './ctxComponents/ctxReviews';
+export { default as ctxComponent } from './ctx/ctxComponent';
+export { default as ctxDictionary } from './ctx/ctxDictionary';
+export { default as ctxRemarks } from './ctx/ctxRemarks';
+export { default as ctxReviews } from './ctx/reviews/ctxReviews';
+export { default as stars } from './ctx/reviews/stars';
 export { default as footer } from './footer';
 export { default as header } from './header';
 export { default as loadingSpinner } from './loadingSpinner';

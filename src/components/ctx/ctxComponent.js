@@ -4,7 +4,7 @@ import { reload } from '../../router';
 import store from '../../store/_index';
 import ctxDictionary from './ctxDictionary';
 import ctxRemarks from './ctxRemarks';
-import ctxReviews from './ctxReviews';
+import ctxReviews from './reviews/ctxReviews';
 
 const { poems } = store;
 

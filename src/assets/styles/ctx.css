@@ -35,7 +35,7 @@
   max-height: 80vh;
   overflow-y: auto;
   scrollbar-width: thin;
-  padding-right: 10px;
+  padding: 0 10px;
 }
 
 #word-audio-wrapper {
@@ -75,4 +75,7 @@
 /* remarks */
 
 #ctx-remarks {
+  background-image: none;
+  border: none;
+  text-align: start;
 }
