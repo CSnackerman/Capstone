@@ -8,4 +8,8 @@
 
 ### Usage
 
-`npm run dev`
+`npm start`
+
+### See It Live
+
+[On Netlify](https://rhymeremarks.netlify.app/)
