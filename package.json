@@ -27,7 +27,8 @@
     "globals": "^15.8.0",
     "parcel": "^2.12.0",
     "prettier": "1.19.1",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "node": "^20.16.0"
   },
   "dependencies": {
     "html-literal": "^1.1.0",
