@@ -8,7 +8,7 @@
 
 ### Usage
 
-`npm run dev`
+`npm start`
 
 ### See It Live
 
