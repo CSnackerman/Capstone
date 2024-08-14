@@ -1,5 +1,5 @@
 import html from 'html-literal';
-import selfie from '../assets/images/selfie.jpg?as=webp&width=256';
+import selfie from '../assets/images/selfie.jpg';
 
 export default () => {
   return html`

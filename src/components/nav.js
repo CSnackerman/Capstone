@@ -1,5 +1,5 @@
 import html from 'html-literal';
-import logo from '../assets/images/logo.png?width=56';
+import logo from '../assets/images/logo.png';
 
 export default () => {
   return html`
