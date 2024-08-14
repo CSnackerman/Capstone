@@ -7,18 +7,52 @@ export default () => {
       <div>Hey there. I'm Colby :)</div>
       <div>I sometimes go by Col.</div>
       <img src=${selfie} alt="selfie.jpg" width="256" />
-      <div>I live in St. Louis, Missouri.</div>
+      <div>I'm from and live in St. Louis, Missouri.</div>
       <div>
-        In 2019, I graduated with my bachelors in computer science at the
+        In 2019 I graduated with a bachelors degree in computer science at the
         University of Missouri - St. Louis (UMSL)
       </div>
       <div>
-        I enjoy playing video games and creating fun web experiences.
+        I've worked in the industry for a couple of years at a few companies as
+        an Android developer, PHP Symfony backend developer, Typescript React
+        frontend developer, and Microsoft SQL Server database developer.
       </div>
-      <div>Lately I've been playing</div>
+      <div>
+        I enjoy playing video games, board games, and creating fun web
+        experiences.
+      </div>
+      <div>Lately I've been playing...</div>
       <ul>
-        <li>Elden Ring</li>
-        <li>Cocoon</li>
+        <li>
+          <div class="play-item">
+            <div>Elden Ring</div>
+            <div class="play-category">🎮</div>
+          </div>
+        </li>
+        <li>
+          <div class="play-item">
+            <div>Cocoon</div>
+            <div class="play-category">🎮</div>
+          </div>
+        </li>
+        <li>
+          <div class="play-item">
+            <div>Play Nine</div>
+            <div class="play-category">🎲</div>
+          </div>
+        </li>
+        <li>
+          <div class="play-item">
+            <div>Yahtzee!</div>
+            <div class="play-category">🎲</div>
+          </div>
+        </li>
+        <li>
+          <div class="play-item">
+            <div>Here to Slay</div>
+            <div class="play-category">🎲</div>
+          </div>
+        </li>
       </ul>
       <div>
         I'm also working on a fishing game that runs in the browser. <br />

@@ -4,8 +4,8 @@
 }
 
 *::selection {
-  color: darkolivegreen;
-  background-color: darkkhaki;
+  color: black;
+  background-color: white;
 }
 
 :root {
