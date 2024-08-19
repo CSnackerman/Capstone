@@ -1,16 +1,25 @@
-import pluginJs from '@eslint/js';
+import js from '@eslint/js';
 import globals from 'globals';
 
 export default [
   {
+    name: 'capstone-client-eslint-config',
+    files: ['src/client/**/*.js'],
     languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-      },
     },
-    files: ['src/**/*.js'],
+    ...js.configs.recommended,
   },
-  pluginJs.configs.recommended,
+  {
+    name: 'capstone-server-eslint-config',
+    files: ['src/server/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: globals.node,
+    },
+    ...js.configs.recommended,
+  },
 ];

@@ -1,5 +1,5 @@
 import html from 'html-literal';
-import speakerIcon from '/src/assets/images/speaker.svg';
+import speakerIcon from '/src/client/assets/images/speaker.svg';
 
 export default (id) => {
   return html`
