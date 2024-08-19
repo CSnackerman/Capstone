@@ -1,8 +1,8 @@
 import html from 'html-literal';
 import { reload } from '../../../router';
-import starEmptySvg from '/src/assets/images/star_empty.svg';
-import starFilledSvg from '/src/assets/images/star_filled.svg';
-import store from '/src/store/_index';
+import starEmptySvg from '/src/client/assets/images/star_empty.svg';
+import starFilledSvg from '/src/client/assets/images/star_filled.svg';
+import store from '/src/client/store/_index';
 
 const { stars, poems } = store;
 
