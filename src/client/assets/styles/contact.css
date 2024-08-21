@@ -67,7 +67,7 @@
   filter: sepia(0.9);
 }
 
-#name-field > label::after {
+#from-field > label::after {
   content: '*';
   padding: 0.2rem;
   color: red;
@@ -77,4 +77,11 @@
   content: '*';
   padding: 0.2rem;
   color: red;
+}
+
+#contact-error {
+  color: red;
+  text-shadow: 1px 1px 1px black;
+  text-align: center;
+  line-height: 2rem;
 }

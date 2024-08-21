@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+import feedback from './routers/feedback.js';
 
 // env
 
@@ -10,17 +11,19 @@ const { PORT = 4040, MONGODB = '' } = process.env;
 
 // database (mongo)
 
-mongoose.connect(MONGODB);
-
 const db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'Connection Error:'));
-db.once(
-  'open',
-  console.log.bind(console, 'successfully opened connection to mongodb')
+db.on('error', (err) =>
+  console.log(
+    `\x1b[31m[mongodb] ${err.name} : ${err.errorResponse.errmsg}\x1b[0m`
+  )
 );
 
-// init express app
+db.once('open', () => console.log('[mongodb] connection opened'));
+
+mongoose.connect(MONGODB).catch(() => {});
+
+/* Express app */
 
 const app = express();
 
@@ -55,4 +58,6 @@ app.get('/status', (req, res) => {
   res.send(JSON.stringify({ status: 'healthy' }));
 });
 
-app.listen(PORT, () => console.log('listening on port', PORT));
+app.use('/feedback', feedback);
+
+app.listen(PORT, () => console.log('[api] listening on port', PORT));

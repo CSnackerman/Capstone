@@ -8,9 +8,14 @@ export default [
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        process: 'readonly',
+      },
     },
-    ...js.configs.recommended,
+    rules: {
+      ...js.configs.recommended.rules,
+    },
   },
   {
     name: 'capstone-server-eslint-config',
@@ -20,6 +25,8 @@ export default [
       sourceType: 'module',
       globals: globals.node,
     },
-    ...js.configs.recommended,
+    rules: {
+      ...js.configs.recommended.rules,
+    },
   },
 ];
