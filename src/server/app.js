@@ -13,11 +13,7 @@ const { PORT = 4040, MONGODB = '' } = process.env;
 
 const db = mongoose.connection;
 
-db.on('error', (err) =>
-  console.log(
-    `\x1b[31m[mongodb] ${err.name} : ${err.errorResponse.errmsg}\x1b[0m`
-  )
-);
+db.on('error', (err) => console.log(`\x1b[31m[mongodb] ${err}\x1b[0m`));
 
 db.once('open', () => console.log('[mongodb] connection opened'));
 
