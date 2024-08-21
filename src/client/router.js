@@ -1,6 +1,7 @@
 import Navigo from 'navigo';
 import { render } from '.';
 import { updateActiveNavigation } from './components/nav';
+import { contactHooks } from './views/contact.js';
 import { notFoundHooks } from './views/notFound';
 import { poemHooks } from './views/poems';
 
@@ -24,7 +25,7 @@ export function initRouter() {
   router
     .on('/', () => render('home'))
     .on('/about', () => render('about'))
-    .on('/contact', () => render('contact'))
+    .on('/contact', () => render('contact'), contactHooks)
     .on('/poems', () => render('poems'), poemHooks)
     .on('/compose', () => render('compose'))
     .notFound(() => render('notFound'), notFoundHooks)
