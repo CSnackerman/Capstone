@@ -35,6 +35,7 @@ export const contactHooks = {
       e.preventDefault();
 
       submitBtn.value = 'Submit ⏳';
+      errorDiv.style.visibility = 'hidden';
 
       const requestBody = {};
       new FormData(form).forEach((value, key) => (requestBody[key] = value));
