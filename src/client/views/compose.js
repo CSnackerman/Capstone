@@ -1,15 +1,16 @@
 import html from 'html-literal';
 import infoSvg from '../assets/images/info.svg';
 import tooltipSvg from '../assets/images/tooltip.svg';
+import { postPoemComposition } from '../network/rhymeRemarksApi.js';
 
 export default () => {
   return html`
     <div id="compose-view">
-      <form>
+      <form id="compose-form">
         <div>
-          <label for="title">Title</label>
+          <label for="compose-title">Title</label>
           <input
-            id="title"
+            id="compose-title"
             name="title"
             type="text"
             placeholder="Invitation"
@@ -18,6 +19,8 @@ export default () => {
         </div>
         <div>
           <textarea
+            id="compose-textarea"
+            name="composition"
             placeholder="If you are a dreamer, come in,
               If you are a dreamer, a wisher, a liar,
               A hope-er, a pray-er, a magic bean buyer...
@@ -43,18 +46,49 @@ export default () => {
         </div>
         <div>
           <div>
-            <label for="author">Author</label>
+            <label for="compose-author">Author</label>
             <input
-              id="author"
+              id="compose-author"
               name="author"
               type="text"
               placeholder="Shel Silverstein"
               required
             />
           </div>
-          <input type="submit" />
+          <input id="compose-submit" type="submit" />
         </div>
       </form>
+      <div id="compose-error" style="visibility: hidden;">.</div>
     </div>
   `;
+};
+
+export const composeHooks = {
+  after() {
+    const form = document.getElementById('compose-form');
+    const submitBtn = document.getElementById('compose-submit');
+    const errorDiv = document.getElementById('compose-error');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      submitBtn.value = 'Submit ⏳';
+      errorDiv.style.visibility = 'hidden';
+
+      const requestBody = {};
+      new FormData(form).forEach((value, key) => (requestBody[key] = value));
+
+      const res = await postPoemComposition(requestBody);
+
+      if (res.ok) {
+        form.reset();
+        submitBtn.value = 'Submit ✅';
+        setTimeout(() => (submitBtn.value = 'Submit'), 3000);
+      } else {
+        submitBtn.value = 'Submit ⛔';
+        errorDiv.innerHTML = `Whoops<br/>[${res.status}] ${res.statusText}`;
+        errorDiv.style.visibility = 'visible';
+      }
+    });
+  },
 };
