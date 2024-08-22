@@ -99,7 +99,7 @@ button {
   border-radius: 0.3rem;
 }
 
-input[type='submit']:hover,
+input[type='submit']:hover:not(:disabled),
 button:hover:not(:disabled) {
   background-color: var(--accent-color);
 }
@@ -109,6 +109,12 @@ button:disabled {
   opacity: 0.5;
 }
 
+input[type='submit']:hover:disabled,
 button:hover:disabled {
   cursor: not-allowed;
+}
+
+textarea::selection {
+  color: white;
+  background-color: blue;
 }

@@ -4,16 +4,16 @@ import { reload } from '../../router';
 import store from '../../store/_index';
 import ctxDictionary from './ctxDictionary';
 import ctxRemarks from './ctxRemarks';
-import ctxReviews from './reviews/ctxReviews';
+import ctxReviews, { addCtxReviewListeners } from './reviews/ctxReviews';
 
 const { poems } = store;
 
 export default () => {
-  if (store.poems.noContext()) {
+  if (poems.noContext()) {
     return '';
   }
 
-  const ctx = store.poems.context;
+  const ctx = poems.context;
   let component = '';
   if (ctx === 'Dictionary') component = ctxDictionary;
   if (ctx === 'Reviews') component = ctxReviews;
@@ -28,7 +28,9 @@ export default () => {
   `;
 };
 
-export function addExitContextListener() {
+export function addCtxListeners() {
+  if (poems.context === 'Reviews') addCtxReviewListeners();
+
   document.getElementById('exit-btn')?.addEventListener('click', () => {
     poems.clearContext();
     reload();

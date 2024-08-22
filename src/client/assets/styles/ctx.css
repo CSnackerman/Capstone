@@ -6,7 +6,11 @@
   padding: 0.5rem;
   max-height: min-content;
   color: lightgoldenrodyellow;
-  border-radius: 5px;
+}
+
+.ctx-component > div {
+  border: none;
+  background-image: none;
 }
 
 #ctx-title {
@@ -70,6 +74,34 @@
 /* reviews */
 
 #ctx-reviews {
+  padding: 0.5rem;
+  text-align: end;
+}
+
+#review-form-stars {
+  border-radius: 5px;
+  margin: 0.5rem;
+  margin-left: 0;
+}
+
+#review-textarea {
+  text-align: start;
+  width: 20rem;
+  height: 10rem;
+}
+
+#review-submit {
+  font-size: 0.8rem;
+  padding: 0.2rem;
+  margin: 0.1rem;
+  margin-right: 0;
+}
+
+#stars-required {
+  font-size: 0.8rem;
+  color: red;
+  text-align: start;
+  visibility: hidden;
 }
 
 /* remarks */
