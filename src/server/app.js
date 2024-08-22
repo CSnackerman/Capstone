@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+import composition from './routers/composition.js';
 import feedback from './routers/feedback.js';
 
 // env
@@ -55,5 +56,6 @@ app.get('/status', (req, res) => {
 });
 
 app.use('/feedback', feedback);
+app.use('/composition', composition);
 
 app.listen(PORT, () => console.log('[api] listening on port', PORT));
