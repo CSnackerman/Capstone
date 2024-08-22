@@ -2,7 +2,7 @@ import html from 'html-literal';
 import { reload } from '../router';
 import store from '../store/_index';
 import { setAudioUtterance } from './audioPlayer';
-import { addExitContextListener } from './ctx/ctxComponent';
+import { addCtxListeners } from './ctx/ctxComponent';
 import stars, { addStarListeners } from './ctx/reviews/stars';
 import { loadSpin } from './loadingSpinner';
 
@@ -49,10 +49,17 @@ export function addPoemListeners() {
     reload();
   });
 
-  // highlighted text
+  // prevents outside-the-box highlighting
+  poemContent.addEventListener('pointerdown', () => remarks.enableHighlight());
+
+  // highlighted text for remarks
   poemContent.addEventListener('pointerup', () => {
+    if (!remarks.highlightEnabled) return;
+
     const selection = document.getSelection();
     const selectedText = selection.toString();
+
+    remarks.disableHighlight();
 
     if (selectedText) {
       poems.setRemarksContext();
@@ -98,6 +105,6 @@ export function addPoemListeners() {
     reload();
 
     setAudioUtterance('dictionary-audio-player', word);
-    addExitContextListener();
+    addCtxListeners();
   });
 }
