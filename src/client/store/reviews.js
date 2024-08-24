@@ -125,7 +125,7 @@ export default {
 // util
 
 function createReviewKey(title, author) {
-  return `${title.replace(' ', '_')}&&&${author.replace(' ', '_')}`;
+  return `${title.replace(/ /g, '_')}&&&${author.replace(/ /g, '_')}`;
 }
 
 function getActiveKey() {
