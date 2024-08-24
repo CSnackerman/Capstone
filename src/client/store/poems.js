@@ -1,7 +1,7 @@
 import { setAudioUtterance } from '../components/audioPlayer';
 import { addCtxListeners } from '../components/ctx/ctxComponent';
 import { fetchRandomPoem } from '../network/poetrydb';
-import store from './_index';
+import store from './_index.js';
 
 export default {
   stack: [],
@@ -10,6 +10,7 @@ export default {
   addPoem(poem) {
     this.stack.push(poem);
     this.index++;
+    store.reviews.initEditableEntry();
   },
   getPoem() {
     return this.empty() ? {} : this.stack[this.index];
@@ -24,7 +25,11 @@ export default {
     if (this.index === this.stack.length - 1) {
       const poem = await fetchRandomPoem();
       this.stack.push(poem);
+      this.index++;
+      store.reviews.initEditableEntry();
+      return;
     }
+
     this.index++;
   },
   previous() {

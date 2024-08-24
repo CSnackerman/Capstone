@@ -23,8 +23,6 @@ export default () => {
 };
 
 export function setupCtxReview() {
-  reviews.initEditableEntry();
-
   if (reviews.activeIsDraftStatus()) {
     addReviewFormListeners();
   } else if (reviews.activeIsSubittedStatus()) {
