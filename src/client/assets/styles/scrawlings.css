@@ -1,9 +1,3 @@
-@keyframes scrolldown {
-  to {
-    transform: translateY(-1000px);
-  }
-}
-
 #scrawlings {
   font-family: 'Great Vibes', cursive;
   position: fixed;

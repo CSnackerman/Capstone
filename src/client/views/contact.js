@@ -11,7 +11,7 @@ export default () => {
           <input id="contact-from" name="from" type="text" required />
         </div>
         <div id="email-field">
-          <label for="contact-email">Email</label>
+          <label for="contact-email">Email <sub>(optional)</sub></label>
           <input id="contact-email" name="email" type="email" />
         </div>
         <div id="message-field">

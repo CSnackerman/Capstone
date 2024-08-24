@@ -1,0 +1,47 @@
+#search-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 5px;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+}
+
+#toggle-search-btn {
+  font-size: 2rem;
+  background-color: transparent;
+  border: none;
+  filter: brightness(1.2) saturate(0.1);
+  text-shadow: -2px 2px 5px black;
+  padding: 0.5rem;
+}
+
+#toggle-search-btn:hover {
+  filter: brightness(1.4) saturate(0.2);
+}
+
+#search-title,
+#search-author {
+  height: 2rem;
+  width: min(33vw, 15rem);
+  background-color: #adbead;
+  border: 1px solid black;
+}
+
+#search-btn {
+  display: block;
+  padding: 0.01rem;
+  font-size: 1.5rem;
+}
+
+#search-title,
+#search-author,
+#search-btn {
+  opacity: 0;
+  scale: 0;
+  visibility: hidden;
+  transform-origin: right;
+  transition: all 200ms ease-in-out;
+}

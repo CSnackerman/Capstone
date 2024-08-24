@@ -3,6 +3,7 @@ import loadingSpinner from './loadingSpinner';
 import poems from './poems';
 import remarks from './remarks';
 import reviews from './reviews';
+import search from './search.js';
 
 const store = {
   poems,
@@ -10,6 +11,7 @@ const store = {
   dictionary,
   reviews,
   remarks,
+  search,
 };
 
 export default store;
