@@ -1,4 +1,4 @@
-import { erase, get, post } from './utils/fetch.js';
+import { erase, get, post, update } from './utils/fetch.js';
 import { mockReviews } from './utils/mock.js';
 
 const { API_HOST = 'http://localhost:4040' } = process.env;
@@ -18,6 +18,9 @@ export const getReviewsByTitleAuthor = async (title, author) =>
 export const deleteReviewById = async (id) =>
   await remarkApiDelete('/review', { id });
 
+export const updateReviewById = async (id, requestBody) =>
+  await remarkApiUpdate(`/review/${id}`, requestBody);
+
 // utils
 const remarkApiGet = async (path) => await get(new URL(path, API_HOST));
 
@@ -26,6 +29,9 @@ const remarkApiPost = async (path, requestBody) =>
 
 const remarkApiDelete = async (path, requestBody) =>
   await erase(new URL(path, API_HOST), requestBody);
+
+const remarkApiUpdate = async (path, requestBody) =>
+  await update(new URL(path, API_HOST), requestBody);
 
 // mock
 

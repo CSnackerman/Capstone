@@ -4,10 +4,6 @@ import poems from './poems.js';
 const REVIEW_DRAFT = 'review_draft';
 const REVIEW_SUBMITTED = 'review_submitted';
 
-// todo: editted review creates new submission should update by cloudId ((review form))
-// todo: add delete review by id functionality
-// todo: add compositions to the search pool
-
 export default {
   editable: {},
   readonly: {},

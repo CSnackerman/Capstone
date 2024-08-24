@@ -36,3 +36,18 @@ export const erase = async (url, requestBody) => {
     return null;
   }
 };
+
+export const update = async (url, requestBody) => {
+  try {
+    return await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
+  } catch (err) {
+    console.err('[update]', err);
+    return null;
+  }
+};

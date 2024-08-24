@@ -52,4 +52,25 @@ router.delete('/', async (req, res) => {
   }
 });
 
+router.patch('/:id', async (req, res) => {
+  try {
+    const result = await Review.findByIdAndUpdate(req.params.id, req.body);
+
+    if (!result) {
+      res.status(404).json({ errMsg: 'review not found. update failed.' });
+    }
+
+    res.json(result);
+  } catch (err) {
+    if (err.kind === 'ObjectId') {
+      console.error('[patch-review] invalid review id');
+      res.status(400).json({ errMsg: 'invalid review id' });
+      return;
+    }
+
+    console.error('[patch-review]', err);
+    res.status(500).json({ errMsg: 'failed to update review' });
+  }
+});
+
 export default router;

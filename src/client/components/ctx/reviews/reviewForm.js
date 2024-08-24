@@ -1,5 +1,8 @@
 import html from 'html-literal';
-import { postReview } from '../../../network/rhymeRemarksApi.js';
+import {
+  postReview,
+  updateReviewById,
+} from '../../../network/rhymeRemarksApi.js';
 import { reload } from '../../../router.js';
 import store from '../../../store/_index.js';
 import stars from './stars.js';
@@ -40,7 +43,7 @@ export function addReviewFormListeners() {
     reviews.setActiveReview(textarea.value)
   );
 
-  // handle submission
+  // submit/update review
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -61,27 +64,36 @@ export function addReviewFormListeners() {
       review: new FormData(form).get('review'),
     };
 
-    const res = await postReview(requestBody);
+    let res;
+    if (reviews.hasCloudId()) {
+      delete requestBody.title;
+      delete requestBody.author;
+      res = await updateReviewById(reviews.getActiveCloudId(), requestBody);
+    } else {
+      res = await postReview(requestBody);
+    }
 
-    if (res.ok) {
-      reviews.setActiveReview_SUBMITTED();
-      const review = await res.json();
-      console.log(review);
+    if (!res.ok) {
+      submitBtn.value = 'Try Again ⛔';
+      reload();
+      return;
+    }
+
+    const review = await res.json();
+
+    if (!reviews.hasCloudId()) {
       reviews.setActiveCloudId(review._id);
     }
 
-    if (res.ok) {
-      form.reset();
-      submitBtn.value = 'Submitted ✅';
-      submitBtn.disabled = true;
-      reviews.setActiveReview_SUBMITTED();
-      setTimeout(() => {
-        submitBtn.value = 'Submit';
-        submitBtn.disabled = false;
-      }, 3000);
-      reload();
-    } else {
-      submitBtn.value = 'Try Again ⛔';
-    }
+    form.reset();
+    submitBtn.value = 'Submitted ✅';
+    submitBtn.disabled = true;
+    setTimeout(() => {
+      submitBtn.value = 'Submit';
+      submitBtn.disabled = false;
+    }, 3000);
+
+    reviews.setActiveReview_SUBMITTED();
+    reload();
   });
 }
