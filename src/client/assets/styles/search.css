@@ -2,11 +2,24 @@
   position: absolute;
   top: 0;
   right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  z-index: 1000000;
+}
+
+#search-collapse-wrapper {
   display: flex;
   gap: 5px;
   justify-content: end;
   align-items: center;
-  width: 100%;
+  background-color: #5d757c;
+  width: fit-content;
+  padding: 0.7rem;
+  border: 1px solid #324758;
+  border-radius: 0.3rem;
+  transform-origin: right;
 }
 
 #toggle-search-btn {
@@ -36,6 +49,7 @@
   font-size: 1.5rem;
 }
 
+#search-collapse-wrapper,
 #search-title,
 #search-author,
 #search-btn {

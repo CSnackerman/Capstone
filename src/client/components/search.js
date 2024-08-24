@@ -8,19 +8,23 @@ const { search, poems } = store;
 export default () => {
   return html`
     <div id="search-container">
-      <input
-        id="search-title"
-        class="search-toggles"
-        type="text"
-        placeholder="title"
-      />
-      <input
-        id="search-author"
-        class="search-toggles"
-        type="text"
-        placeholder="author"
-      />
-      <button id="search-btn" class="search-toggles" title="search">🔎</button>
+      <div id="search-collapse-wrapper" class="search-toggles">
+        <input
+          id="search-title"
+          class="search-toggles"
+          type="text"
+          placeholder="title"
+        />
+        <input
+          id="search-author"
+          class="search-toggles"
+          type="text"
+          placeholder="author"
+        />
+        <button id="search-btn" class="search-toggles" title="search">
+          🔎
+        </button>
+      </div>
       <button id="toggle-search-btn">🔎</button>
     </div>
   `;
