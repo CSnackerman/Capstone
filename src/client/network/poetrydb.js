@@ -8,7 +8,7 @@ export async function fetchRandomPoem() {
   return {
     title: poem.title,
     author: poem.author,
-    content: markupLines(poem),
+    content: markupLines(poem.lines),
   };
 }
 
@@ -21,12 +21,12 @@ export async function fetchPoemByTitleAuthor(title, author) {
     const json = await res.json();
     const poem = json[0];
 
-    if (!poem) throw '404 poem not found';
+    if (!poem) throw '404 poetrydb poem not found';
 
     return {
       title,
       author,
-      content: markupLines(poem),
+      content: markupLines(poem.lines),
     };
   } catch (err) {
     console.error('[poemByTitleAuthor]', err);
@@ -35,15 +35,16 @@ export async function fetchPoemByTitleAuthor(title, author) {
       title,
       author,
       content: err,
+      error: true,
     };
   }
 }
 
 // util
 
-function markupLines(poem) {
+export function markupLines(poemLines) {
   const lines = [];
-  for (const line of poem.lines) {
+  for (const line of poemLines) {
     const words = line.match(/\W|\w+/g) ?? [];
 
     lines.push(

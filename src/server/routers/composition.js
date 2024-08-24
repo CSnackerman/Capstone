@@ -20,4 +20,22 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.get('/:title/:author', async (req, res) => {
+  try {
+    const composition = await Composition.findOne(req.params).exec();
+
+    if (!composition) throw 404;
+
+    res.json(composition);
+  } catch (err) {
+    if (err === 404) {
+      res.status(404).json(null);
+      return;
+    }
+
+    console.log('[composition-get]', Object.keys(err));
+    res.status(500).json({ errMsg: '[composition-get] server error' });
+  }
+});
+
 export default router;

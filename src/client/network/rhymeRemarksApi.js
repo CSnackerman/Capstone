@@ -9,6 +9,9 @@ export const postFeedbackMessage = async (requestBody) =>
 export const postPoemComposition = async (requestBody) =>
   await remarkApiPost('/composition', requestBody);
 
+export const getCompositionByTitleAuthor = async (title, author) =>
+  await remarkApiGet(`/composition/${title}/${author}`);
+
 export const postReview = async (requestBody) =>
   await remarkApiPost('/review', requestBody);
 
