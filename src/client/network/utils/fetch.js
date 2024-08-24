@@ -17,7 +17,7 @@ export const get = async (url) => {
   try {
     return await fetch(url);
   } catch (err) {
-    console.err('[get]', err);
+    console.error('[get]', err);
     return null;
   }
 };
@@ -32,7 +32,7 @@ export const erase = async (url, requestBody) => {
       body: JSON.stringify(requestBody),
     });
   } catch (err) {
-    console.err('[delete]', err);
+    console.error('[delete]', err);
     return null;
   }
 };
@@ -47,7 +47,7 @@ export const update = async (url, requestBody) => {
       body: JSON.stringify(requestBody),
     });
   } catch (err) {
-    console.err('[update]', err);
+    console.error('[update]', err);
     return null;
   }
 };
