@@ -32,7 +32,7 @@ export function addSearchListeners() {
   const titleInput = document.getElementById('search-title');
   const authorInput = document.getElementById('search-author');
 
-  // toggler
+  // toggle visibility
   toggleBtn.addEventListener('click', () => {
     search.toggleCollapsed();
 
@@ -52,7 +52,7 @@ export function addSearchListeners() {
     }
   });
 
-  // send search
+  // submit search
   searchBtn.addEventListener('click', async () => {
     const title = getSearchTitle();
     const author = getSearchAuthor();
@@ -76,7 +76,7 @@ export function addSearchListeners() {
 
     // collapse search
     setStyles({ visibility: 'hidden', opacity: 0, scale: 0 });
-    search.toggleCollapsed();
+    search.collapse();
 
     reload();
   });
