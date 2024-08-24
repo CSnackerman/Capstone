@@ -1,5 +1,6 @@
 import html from 'html-literal';
-import { fetchPoemByTitleAuthor } from '../network/poetrydb.js';
+import { fetchPoemByTitleAuthor, markupLines } from '../network/poetrydb.js';
+import { getCompositionByTitleAuthor } from '../network/rhymeRemarksApi.js';
 import { reload } from '../router.js';
 import store from '../store/_index.js';
 
@@ -8,19 +9,23 @@ const { search, poems } = store;
 export default () => {
   return html`
     <div id="search-container">
-      <input
-        id="search-title"
-        class="search-toggles"
-        type="text"
-        placeholder="title"
-      />
-      <input
-        id="search-author"
-        class="search-toggles"
-        type="text"
-        placeholder="author"
-      />
-      <button id="search-btn" class="search-toggles" title="search">🔎</button>
+      <div id="search-collapse-wrapper" class="search-toggles">
+        <input
+          id="search-title"
+          class="search-toggles"
+          type="text"
+          placeholder="title"
+        />
+        <input
+          id="search-author"
+          class="search-toggles"
+          type="text"
+          placeholder="author"
+        />
+        <button id="search-btn" class="search-toggles" title="search">
+          🔎
+        </button>
+      </div>
       <button id="toggle-search-btn">🔎</button>
     </div>
   `;
@@ -67,7 +72,24 @@ export function addSearchListeners() {
 
     if (!title || !author) return;
 
-    const poem = await fetchPoemByTitleAuthor(title, author);
+    const poetryDbPoem = await fetchPoemByTitleAuthor(title, author);
+
+    const compositionResponse = await getCompositionByTitleAuthor(
+      title,
+      author
+    );
+
+    let poem = { title, author, content: 'Could not locate your search.' };
+    if (poetryDbPoem.error === false) {
+      poem = poetryDbPoem;
+    } else if (compositionResponse.ok) {
+      const { title, author, composition } = await compositionResponse.json();
+      poem = {
+        title,
+        author,
+        content: markupLines(composition.split('\n')),
+      };
+    }
 
     poems.addPoem(poem);
 
