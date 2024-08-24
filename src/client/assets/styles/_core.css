@@ -118,3 +118,8 @@ textarea::selection {
   color: white;
   background-color: blue;
 }
+
+sub {
+  font-size: 0.7rem;
+  color: #ffffff88;
+}
