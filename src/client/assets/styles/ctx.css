@@ -6,6 +6,8 @@
   padding: 0.5rem;
   max-height: min-content;
   color: lightgoldenrodyellow;
+  min-width: 35vw;
+  max-width: 40vw;
 }
 
 .ctx-component > div {
@@ -28,7 +30,7 @@
   cursor: pointer;
 }
 
-/* dicionary */
+/* dictionary */
 
 .ctx-dictionary {
   text-align: start;
@@ -71,11 +73,41 @@
   font-size: 0.9rem;
 }
 
+#review-submitted {
+  background-color: #ffd90017;
+  border-radius: 0.3rem;
+  text-align: start;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+#review-submitted-content {
+  min-height: 3rem;
+}
+
+#review-submitted-buttons {
+  display: flex;
+  justify-content: end;
+  gap: 2px;
+}
+
+.review-submitted-button {
+  font-size: 0.8rem;
+  padding: 0.2rem 0.3rem;
+  background-color: #a52a2a44;
+  color: white;
+}
+
 /* reviews */
 
 #ctx-reviews {
-  padding: 0.5rem;
   text-align: end;
+  min-width: 10vw;
+}
+
+#review-form-container {
+  display: grid;
+  grid-template-rows: auto auto auto;
 }
 
 #review-form-stars {
@@ -86,7 +118,7 @@
 
 #review-textarea {
   text-align: start;
-  width: 20rem;
+  width: 100%;
   height: 10rem;
 }
 
@@ -102,6 +134,46 @@
   color: red;
   text-align: start;
   visibility: hidden;
+}
+
+/* reviews readonly */
+
+#reviews-readonly {
+  max-height: 42vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  border: 1px solid burlywood;
+  border-radius: 0.3rem;
+}
+
+#review-item {
+  min-height: 7rem;
+  padding: 0.5rem;
+  padding-right: 1rem;
+  background-color: #2015079d;
+  border: 1px solid burlywood;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  text-align: start;
+}
+
+#review-item:first-of-type {
+  border-top: none;
+}
+
+#review-item:last-of-type {
+  border-bottom: none;
+}
+
+#readonly-stars {
+  cursor: default;
+  margin-bottom: 3px;
+}
+
+#readonly-review-content {
+  text-align: start;
+  font-size: 0.8rem;
 }
 
 /* remarks */

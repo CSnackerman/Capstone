@@ -1,7 +1,8 @@
 import html from 'html-literal';
 import { rerender } from '..';
-import { ctxComponent, poem } from '../components/_index';
+import { ctxComponent, poem, search } from '../components/_index';
 import { addPoemListeners } from '../components/poem';
+import { addSearchListeners } from '../components/search.js';
 import store from '../store/_index';
 
 const { loadingSpinner, poems } = store;
@@ -10,11 +11,13 @@ export default () => {
   // prettier-ignore
   return poems.noContext()
     ? html`
+        ${search()}
         <div id="poems-view" class="noncontextual">
           ${poem()}
         </div>
       `
     : html`
+        ${search()}
         <div id="poems-view" class="contextual">
           ${poem()} 
           ${ctxComponent()}
@@ -38,6 +41,7 @@ export const poemHooks = {
   },
   after() {
     addPoemListeners();
+    addSearchListeners();
     poems.restoreContext();
   },
 };

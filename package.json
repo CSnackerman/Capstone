@@ -4,7 +4,7 @@
   "description": "Social platform for poetry",
   "type": "module",
   "scripts": {
-    "start": "parcel",
+    "start": "parcel --no-cache",
     "build": "parcel build",
     "format": "prettier src --write",
     "clean": "rimraf .parcel-cache dist",

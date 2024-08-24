@@ -11,13 +11,14 @@
 .contextual {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+
   align-items: center;
   justify-items: center;
 }
 
 .noncontextual {
-  display: block;
+  display: flex;
+  justify-content: center;
 }
 
 .stars {
@@ -26,6 +27,6 @@
   width: min-content;
 }
 
-.star:hover {
+.star:hover:not(.readonly) {
   cursor: pointer;
 }

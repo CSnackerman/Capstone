@@ -11,12 +11,44 @@ router.post('/', async (req, res) => {
 
     res.json(data);
   } catch (err) {
-    console.log('[api]', err);
+    console.log('[post-review]', err);
     if (err?.name === 'ValidationError') {
       res.status(400).json(err.errors);
       return;
     }
+
     res.status(500).json(err.errors);
+  }
+});
+
+router.get('/', async (req, res) => {
+  try {
+    const { title, author } = req.query;
+
+    if (!title || !author) {
+      res.status(400).json({
+        errMsg: `invalid query params: author=${author} title=${title}`,
+      });
+    }
+
+    const reviews = await Review.find({ title, author }).exec();
+    res.json(reviews);
+  } catch (err) {
+    console.log('[get-review]', err);
+    res.status(500).json({ errMsg: 'failed to retrieve reviews' });
+  }
+});
+
+router.delete('/', async (req, res) => {
+  try {
+    const result = await Review.findOneAndDelete({ _id: req.body.id }).exec();
+
+    if (!result) throw 'failed';
+
+    res.json(result);
+  } catch (err) {
+    console.log('[delete-review]', err);
+    res.status(500).json({ errMsg: 'failed to delete review' });
   }
 });
 

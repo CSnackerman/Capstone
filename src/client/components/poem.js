@@ -1,6 +1,7 @@
 import html from 'html-literal';
 import { reload } from '../router';
 import store from '../store/_index';
+import reviews from '../store/reviews.js';
 import { setAudioUtterance } from './audioPlayer';
 import { addCtxListeners } from './ctx/ctxComponent';
 import stars, { addStarListeners } from './ctx/reviews/stars';
@@ -44,8 +45,10 @@ export function addPoemListeners() {
   // reviews
   addStarListeners();
 
-  reviewsBtn.addEventListener('click', () => {
+  reviewsBtn.addEventListener('click', async () => {
     poems.setReviewsContext();
+    loadSpin();
+    await reviews.syncActiveReadonlyReviews();
     reload();
   });
 

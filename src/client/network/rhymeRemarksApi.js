@@ -1,4 +1,5 @@
-import { post } from '../utils/fetch.js';
+import { erase, get, post } from './utils/fetch.js';
+import { mockReviews } from './utils/mock.js';
 
 const { API_HOST = 'http://localhost:4040' } = process.env;
 
@@ -12,10 +13,28 @@ export const postReview = async (requestBody) =>
   await remarkApiPost('/review', requestBody);
 
 export const getReviewsByTitleAuthor = async (title, author) =>
-  await remarkApiGet(`/reviews?title=${title}&author=${author}`);
+  await remarkApiGet(`/review?title=${title}&author=${author}`);
+
+export const deleteReviewById = async (id) =>
+  await remarkApiDelete('/review', { id });
 
 // utils
-const remarkApiGet = async (path) => await fetch(new URL(path, API_HOST));
+const remarkApiGet = async (path) => await get(new URL(path, API_HOST));
 
 const remarkApiPost = async (path, requestBody) =>
   await post(new URL(path, API_HOST), requestBody);
+
+const remarkApiDelete = async (path, requestBody) =>
+  await erase(new URL(path, API_HOST), requestBody);
+
+// mock
+
+export const getMockReviewsByTitleAuthor = async () => {
+  return new Promise((resolve, reject) => {
+    if (Math.random() > 1) {
+      reject('randomly failed');
+    }
+
+    setTimeout(() => resolve(mockReviews), 300);
+  });
+};

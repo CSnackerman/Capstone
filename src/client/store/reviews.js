@@ -1,30 +1,133 @@
+import { getReviewsByTitleAuthor } from '../network/rhymeRemarksApi.js';
 import poems from './poems.js';
 
+const REVIEW_DRAFT = 'review_draft';
+const REVIEW_SUBMITTED = 'review_submitted';
+
+// todo: editted review creates new submission should update by cloudId ((review form))
+// todo: add delete review by id functionality
+// todo: add compositions to the search pool
+
 export default {
-  userReviews: {},
-  userRatings: {},
-  setRatingByTitle(title, rating) {
-    this.userRatings[title] = rating;
+  editable: {},
+  readonly: {},
+  // readonly methods
+  async syncActiveReadonlyReviews() {
+    const res = await getReviewsByTitleAuthor(
+      poems.getTitle(),
+      poems.getAuthor()
+    );
+
+    const reviews = await res.json();
+
+    this.storeActiveReadonlyReviews(reviews);
   },
-  setReviewByTitle(title, review) {
-    this.userReviews[title] = review;
+  storeActiveReadonlyReviews(reviews) {
+    const key = getActiveKey();
+    const stripIdentifiers = ({ rating, review }) => ({ rating, review });
+    this.readonly[key] = reviews.map(stripIdentifiers);
   },
-  getRatingByTitle(title) {
-    return this.userRatings[title];
+  activeReadonlyIsSynced() {
+    return getActiveKey() in this.readonly;
   },
-  getReviewByTitle(title) {
-    return this.userReviews[title];
+  getActiveReadonlyReviews() {
+    const key = getActiveKey();
+
+    return this.readonly[key] ?? [];
   },
-  setCurrentPoemRating(rating) {
-    this.setRatingByTitle(poems.getTitle(), rating);
+  getActiveReadonlyReviewCount() {
+    const key = getActiveKey();
+
+    if (key in this.readonly) {
+      return this.readonly[key].length;
+    }
+
+    return 0;
   },
-  setCurrentPoemReview(review) {
-    this.setReviewByTitle(poems.getTitle(), review);
+  // editable methods
+  initEditableEntry() {
+    const key = getActiveKey();
+
+    if (key in this.editable) return;
+
+    this.editable[key] = {
+      status: REVIEW_DRAFT,
+      cloudId: undefined,
+      rating: undefined,
+      review: undefined,
+    };
   },
-  getCurrentPoemRating() {
-    return this.getRatingByTitle(poems.getTitle());
+  setActiveReview(review) {
+    const key = getActiveKey();
+
+    if (key in this.editable) {
+      this.editable[key].review = review;
+      return;
+    }
   },
-  getCurrentPoemReview() {
-    return this.getReviewByTitle(poems.getTitle());
+  setActiveRating(rating) {
+    const key = getActiveKey();
+
+    if (key in this.editable) {
+      this.editable[key].rating = rating;
+      return;
+    }
+  },
+
+  setActiveReview_DRAFT() {
+    const key = getActiveKey();
+    this.editable[key].status = REVIEW_DRAFT;
+  },
+  setActiveReview_SUBMITTED() {
+    const key = getActiveKey();
+    this.editable[key].status = REVIEW_SUBMITTED;
+  },
+  getActiveReview() {
+    const key = getActiveKey();
+    return this.editable[key]?.review;
+  },
+  getActiveRating() {
+    const key = getActiveKey();
+    return this.editable[key]?.rating;
+  },
+  getActiveStatus() {
+    const key = getActiveKey();
+    return this.editable[key]?.status;
+  },
+  activeIsDraftStatus() {
+    return this.getActiveStatus() === REVIEW_DRAFT;
+  },
+  activeIsSubittedStatus() {
+    return this.getActiveStatus() === REVIEW_SUBMITTED;
+  },
+  setActiveCloudId(id) {
+    const key = getActiveKey();
+    this.editable[key].cloudId = id;
+
+    console.log('active-editable', this.editable[key]);
+  },
+  getActiveCloudId() {
+    return this.editable[getActiveKey()].cloudId;
+  },
+  resetActiveDraft() {
+    this.editable[getActiveKey()] = {
+      status: REVIEW_DRAFT,
+      cloudId: undefined,
+      rating: undefined,
+      review: undefined,
+    };
+  },
+  hasCloudId() {
+    return !!this.editable[getActiveKey()]?.cloudId;
   },
 };
+
+// util
+
+function createReviewKey(title, author) {
+  return `${title.replace(' ', '_')}&&&${author.replace(' ', '_')}`;
+}
+
+function getActiveKey() {
+  return createReviewKey(poems.getTitle(), poems.getAuthor());
+}

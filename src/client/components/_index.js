@@ -10,3 +10,4 @@ export { default as loadingSpinner } from './loadingSpinner';
 export { default as mainContent } from './mainContent';
 export { default as poem } from './poem';
 export { default as scrawlings } from './scrawlings';
+export { default as search } from './search.js';

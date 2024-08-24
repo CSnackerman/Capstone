@@ -8,43 +8,45 @@ import starLightFilledSvg from '/src/client/assets/images/star_light_filled.svg'
 
 const { reviews, poems } = store;
 
-export default (id, mode = 'dark') => {
-  const starWidth = '23px';
+export default (id, mode = 'dark', readonlyRating = undefined, scale = 23) => {
+  const starWidth = `${scale}px`;
+
+  const readonly = readonlyRating ? 'readonly' : 'star';
 
   return html`
     <div id="${id}-stars" class="stars">
       <img
         id="star-1"
-        class="star ${mode}"
-        src=${getStarSrc(1, mode)}
+        class="star ${mode} ${readonly}"
+        src=${getStarSrc(1, mode, readonlyRating)}
         alt="${getStarAlt(1)}"
         width="${starWidth}"
       />
       <img
         id="star-2"
-        class="star ${mode}"
-        src=${getStarSrc(2, mode)}
+        class="star ${mode} ${readonly}"
+        src=${getStarSrc(2, mode, readonlyRating)}
         alt="${getStarAlt(2)}"
         width="${starWidth}"
       />
       <img
         id="star-3"
-        class="star ${mode}"
-        src=${getStarSrc(3, mode)}
+        class="star ${mode} ${readonly}"
+        src=${getStarSrc(3, mode, readonlyRating)}
         alt="${getStarAlt(3)}"
-        width="${starWidth}"
+        width="${starWidth} ${readonly}"
       />
       <img
         id="star-4"
-        class="star ${mode}"
-        src=${getStarSrc(4, mode)}
+        class="star ${mode} ${readonly}"
+        src=${getStarSrc(4, mode, readonlyRating)}
         alt="${getStarAlt(4)}"
         width="${starWidth}"
       />
       <img
         id="star-5"
-        class="star ${mode}"
-        src=${getStarSrc(5, mode)}
+        class="star ${mode} ${readonly}"
+        src=${getStarSrc(5, mode, readonlyRating)}
         alt="${getStarAlt(5)}"
         width="${starWidth}"
       />
@@ -53,8 +55,10 @@ export default (id, mode = 'dark') => {
 };
 
 export function addStarListeners() {
-  const starElements = document.querySelectorAll('.star');
-  const currentRating = reviews.getCurrentPoemRating();
+  const starElements = Array.from(document.querySelectorAll('.star')).filter(
+    (star) => !isReadonly(star)
+  );
+  const currentRating = reviews.getActiveRating();
 
   starElements.forEach((star) => {
     // hover
@@ -73,7 +77,7 @@ export function addStarListeners() {
     // click
     star.addEventListener('click', (e) => {
       const newRating = getStarNumber(e.target);
-      reviews.setCurrentPoemRating(newRating);
+      reviews.setActiveRating(newRating);
       poems.setReviewsContext();
       reload();
     });
@@ -90,6 +94,10 @@ function isLightStar(star) {
   return star.classList.contains('light');
 }
 
+function isReadonly(star) {
+  return star.classList.contains('readonly');
+}
+
 function assignStarAttributes(star, threshold) {
   const starNumber = getStarNumber(star);
   if (starNumber <= threshold) {
@@ -101,8 +109,9 @@ function assignStarAttributes(star, threshold) {
   }
 }
 
-function getStarSrc(starId, mode) {
-  const currentRating = reviews.getCurrentPoemRating();
+function getStarSrc(starId, mode, readonlyRating) {
+  const currentRating = readonlyRating ?? reviews.getActiveRating();
+
   if (mode === 'light') {
     return starId <= currentRating ? starLightFilledSvg : starLightEmptySvg;
   } else {
@@ -111,7 +120,5 @@ function getStarSrc(starId, mode) {
 }
 
 function getStarAlt(starId) {
-  return starId <= reviews.getCurrentPoemRating()
-    ? 'star-filled'
-    : 'star-empty';
+  return starId <= reviews.getActiveRating() ? 'star-filled' : 'star-empty';
 }

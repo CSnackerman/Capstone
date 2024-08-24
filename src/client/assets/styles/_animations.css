@@ -27,3 +27,9 @@
     scale: 2;
   }
 }
+
+@keyframes scrolldown {
+  to {
+    transform: translateY(-1000px);
+  }
+}

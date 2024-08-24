@@ -4,7 +4,7 @@ import { reload } from '../../router';
 import store from '../../store/_index';
 import ctxDictionary from './ctxDictionary';
 import ctxRemarks from './ctxRemarks';
-import ctxReviews, { addCtxReviewListeners } from './reviews/ctxReviews';
+import ctxReviews, { setupCtxReview } from './reviews/ctxReviews';
 
 const { poems } = store;
 
@@ -29,7 +29,7 @@ export default () => {
 };
 
 export function addCtxListeners() {
-  if (poems.context === 'Reviews') addCtxReviewListeners();
+  if (poems.context === 'Reviews') setupCtxReview();
 
   document.getElementById('exit-btn')?.addEventListener('click', () => {
     poems.clearContext();
