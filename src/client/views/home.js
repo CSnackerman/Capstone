@@ -6,10 +6,10 @@ export default () => {
     <div id="home-view">
       <h1>Welcome to <b>Rhyme Remarks</b></h1>
       <div>
-        <div>Please read some poetry.</div>
-        <div>Learn some new words.</div>
-        <div>Contribute to ratings.</div>
-        <div>Share your insight.</div>
+        <div>Please read some poetry</div>
+        <div>Learn a few new words</div>
+        <div>Leave some reviews</div>
+        <div>Write your remarks</div>
         <div>And enjoy!</div>
       </div>
     </div>
