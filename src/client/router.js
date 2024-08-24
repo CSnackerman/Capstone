@@ -6,7 +6,7 @@ import { contactHooks } from './views/contact.js';
 import { notFoundHooks } from './views/notFound';
 import { poemHooks } from './views/poems';
 
-export const router = new Navigo();
+export const router = new Navigo('/');
 
 const commonHooks = {
   before(done) {
