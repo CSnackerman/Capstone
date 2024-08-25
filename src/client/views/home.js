@@ -4,7 +4,10 @@ import { scrawlings } from '../components/_index';
 export default () => {
   return html`
     <div id="home-view">
-      <h1>Welcome to <b>Rhyme Remarks</b></h1>
+      <h1>
+        <div>Welcome to</div>
+        <div><b>Rhyme Remarks</b></div>
+      </h1>
       <div>
         <div>Please read some poetry</div>
         <div>Learn a few new words</div>
