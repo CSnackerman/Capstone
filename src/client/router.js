@@ -1,10 +1,16 @@
 import Navigo from 'navigo';
 import { render } from '.';
-import { updateActiveNavigation } from './components/nav';
+import {
+  addMobileNavHeaderListeners,
+  updateActiveNavigation,
+} from './components/navHeader.js';
+import store from './store/_index.js';
 import { composeHooks } from './views/compose.js';
 import { contactHooks } from './views/contact.js';
 import { notFoundHooks } from './views/notFound';
 import { poemHooks } from './views/poems';
+
+const { device } = store;
 
 export const router = new Navigo('/');
 
@@ -18,6 +24,10 @@ const commonHooks = {
   },
   after(match) {
     updateActiveNavigation(match);
+
+    if (device.isMobile()) {
+      addMobileNavHeaderListeners();
+    }
   },
 };
 
