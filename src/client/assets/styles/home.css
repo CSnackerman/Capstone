@@ -2,13 +2,23 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  row-gap: 2rem;
   font-size: 2rem;
   line-height: 2;
 }
 
 #home-view > h1 {
+  display: flex;
+  column-gap: 0.9rem;
+  flex-wrap: wrap;
+  width: min-content;
   font-weight: normal;
   font-size: 3rem;
+  margin-left: -1.5rem;
+}
+
+#home-view > h1 > div {
+  width: max-content;
 }
 
 #home-view > h1 > b {
@@ -18,4 +28,10 @@
 #home-view > div {
   align-self: center;
   width: fit-content;
+}
+
+@media (width > 700px) {
+  #home-view > h1 {
+    flex-wrap: nowrap;
+  }
 }
