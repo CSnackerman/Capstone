@@ -80,7 +80,7 @@ export function addSearchListeners() {
     );
 
     let poem = { title, author, content: 'Could not locate your search.' };
-    if (poetryDbPoem.error === false) {
+    if (!poetryDbPoem.error) {
       poem = poetryDbPoem;
     } else if (compositionResponse.ok) {
       const { title, author, composition } = await compositionResponse.json();
