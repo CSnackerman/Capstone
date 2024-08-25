@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "parcel --no-cache",
+    "dev-host": "parcel --no-cache --host 0.0.0.0",
     "build": "parcel build",
     "format": "prettier src --write",
     "clean": "rimraf .parcel-cache dist",
