@@ -72,23 +72,25 @@ export function addSearchListeners() {
 
     if (!title || !author) return;
 
+    let poem = { title, author, content: 'Could not locate your search.' };
     const poetryDbPoem = await fetchPoemByTitleAuthor(title, author);
 
-    const compositionResponse = await getCompositionByTitleAuthor(
-      title,
-      author
-    );
-
-    let poem = { title, author, content: 'Could not locate your search.' };
     if (!poetryDbPoem.error) {
       poem = poetryDbPoem;
-    } else if (compositionResponse.ok) {
-      const { title, author, composition } = await compositionResponse.json();
-      poem = {
+    } else {
+      const compositionResponse = await getCompositionByTitleAuthor(
         title,
-        author,
-        content: markupLines(composition.split('\n')),
-      };
+        author
+      );
+
+      if (compositionResponse.ok) {
+        const { title, author, composition } = await compositionResponse.json();
+        poem = {
+          title,
+          author,
+          content: markupLines(composition.split('\n')),
+        };
+      }
     }
 
     poems.addPoem(poem);
