@@ -78,7 +78,6 @@ input[type='text'],
 input[type='email'],
 input[type='password'],
 textarea {
-  all: unset;
   display: block;
   position: relative;
   box-sizing: border-box;
@@ -86,6 +85,10 @@ textarea {
   background-color: white;
   border-radius: 0.2rem;
   padding: 0.3rem;
+}
+
+textarea {
+  resize: none;
 }
 
 input[type='submit'],
@@ -125,4 +128,9 @@ textarea::selection {
 sub {
   font-size: 0.7rem;
   color: #ffffff88;
+}
+
+.optional {
+  font-size: 0.65rem;
+  opacity: 0.7;
 }
