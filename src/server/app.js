@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import composition from './routers/composition.js';
 import feedback from './routers/feedback.js';
+import remark from './routers/remark.js';
 import review from './routers/review.js';
 
 // env
@@ -59,5 +60,6 @@ app.get('/status', (req, res) => {
 app.use('/feedback', feedback);
 app.use('/composition', composition);
 app.use('/review', review);
+app.use('/remark', remark);
 
 app.listen(PORT, () => console.log('[api] listening on port', PORT));

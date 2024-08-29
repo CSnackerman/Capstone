@@ -4,6 +4,7 @@ import store from '../store/_index';
 import reviews from '../store/reviews.js';
 import { setAudioUtterance } from './audioPlayer';
 import { addCtxListeners } from './ctx/ctxComponent';
+import { beforeCtxRemarks } from './ctx/ctxRemarks.js';
 import stars, { addStarListeners } from './ctx/reviews/stars';
 import { loadSpin } from './loadingSpinner';
 
@@ -56,7 +57,7 @@ export function addPoemListeners() {
   poemContent.addEventListener('pointerdown', () => remarks.enableHighlight());
 
   // highlighted text for remarks
-  poemContent.addEventListener('pointerup', () => {
+  poemContent.addEventListener('pointerup', async () => {
     if (!remarks.highlightEnabled) return;
 
     const selection = document.getSelection();
@@ -66,7 +67,10 @@ export function addPoemListeners() {
 
     if (selectedText) {
       poems.setRemarksContext();
-      remarks.setRawChunk(selectedText);
+      remarks.setChunk(selectedText);
+
+      loadSpin();
+      await beforeCtxRemarks();
       reload();
     }
   });

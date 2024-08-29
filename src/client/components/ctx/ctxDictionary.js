@@ -21,19 +21,13 @@ export default () => {
 // prettier-ignore
 function mapDefinitions() {
   const partsOfSpeech = Object.keys(dictionary.definitions);
-  let htmlOut = '';
-  for (const pos of partsOfSpeech) {
-    htmlOut += html`
-      <h5 id="pos"><i>${pos}</i></h5>
-      <ol id="def-list">
-    `;
 
-    for (const def of dictionary.definitions[pos]) {
-      htmlOut += html`<li id="def">${def}</li>`;
-    }
-
-    htmlOut += html`</ol>`;
-  }
-
-  return htmlOut;
+  return partsOfSpeech.map((pos) => html`
+    <h5 id="pos"><i>${pos}</i></h5>
+    <ol id="def-list">
+      ${dictionary.definitions[pos].map((def) => html`
+          <li id="def">${def}</li>
+      `)}
+    </ol>
+  `)
 }

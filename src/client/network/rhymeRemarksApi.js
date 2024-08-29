@@ -3,15 +3,18 @@ import { mockReviews } from './utils/mock.js';
 
 const { API_HOST = 'http://localhost:4040' } = process.env;
 
+// feedback / contact
 export const postFeedbackMessage = async (requestBody) =>
   await remarkApiPost('/feedback', requestBody);
 
+// composition
 export const postPoemComposition = async (requestBody) =>
   await remarkApiPost('/composition', requestBody);
 
 export const getCompositionByTitleAuthor = async (title, author) =>
   await remarkApiGet(`/composition/${title}/${author}`);
 
+// reviews
 export const postReview = async (requestBody) =>
   await remarkApiPost('/review', requestBody);
 
@@ -23,6 +26,15 @@ export const deleteReviewById = async (id) =>
 
 export const updateReviewById = async (id, requestBody) =>
   await remarkApiUpdate(`/review/${id}`, requestBody);
+
+// remarks
+export const getRemarksByChunk = async (chunk) =>
+  await remarkApiGet(`/remark?chunk=${chunk}`);
+
+export const postRemark = async (requestBody) =>
+  await remarkApiPost('/remark', requestBody);
+
+// ---
 
 // utils
 const remarkApiGet = async (path) => await get(new URL(path, API_HOST));

@@ -42,7 +42,7 @@ export function addSearchListeners() {
     search.toggleCollapsed();
 
     if (!search.isCollapsed()) {
-      setStyles({ visibility: 'visible', scale: 1 });
+      setStyles({ display: 'flex', visibility: 'visible', scale: 1 });
       toggleBtn.textContent = '❌';
     }
 
@@ -53,7 +53,10 @@ export function addSearchListeners() {
       toggleBtn.textContent = '🔎';
 
       // lazy hack. ms matches css transition time in search.css
-      setTimeout(() => setStyles({ visibility: 'hidden' }), 200);
+      setTimeout(
+        () => setStyles({ display: 'none', visibility: 'hidden' }),
+        200
+      );
     }
   });
 
@@ -72,23 +75,25 @@ export function addSearchListeners() {
 
     if (!title || !author) return;
 
+    let poem = { title, author, content: 'Could not locate your search.' };
     const poetryDbPoem = await fetchPoemByTitleAuthor(title, author);
 
-    const compositionResponse = await getCompositionByTitleAuthor(
-      title,
-      author
-    );
-
-    let poem = { title, author, content: 'Could not locate your search.' };
     if (!poetryDbPoem.error) {
       poem = poetryDbPoem;
-    } else if (compositionResponse.ok) {
-      const { title, author, composition } = await compositionResponse.json();
-      poem = {
+    } else {
+      const compositionResponse = await getCompositionByTitleAuthor(
         title,
-        author,
-        content: markupLines(composition.split('\n')),
-      };
+        author
+      );
+
+      if (compositionResponse.ok) {
+        const { title, author, composition } = await compositionResponse.json();
+        poem = {
+          title,
+          author,
+          content: markupLines(composition.split('\n')),
+        };
+      }
     }
 
     poems.addPoem(poem);
