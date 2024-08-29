@@ -28,6 +28,12 @@
   cursor: default;
 }
 
+#poem-content::selection,
+#poem-content *::selection {
+  color: black;
+  background-color: olivedrab;
+}
+
 #poem-buttons {
   margin-top: 1rem;
   align-self: flex-end;
