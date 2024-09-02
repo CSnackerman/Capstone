@@ -1,3 +1,8 @@
+/**
+ * PoetryDB API
+ * {@link https://poetrydb.org/index.html}
+ */
+
 const POETRYDB_API_DOMAIN = 'https://poetrydb.org';
 
 export async function fetchRandomPoem() {

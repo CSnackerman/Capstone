@@ -1,17 +1,16 @@
 import html from 'html-literal';
 import { reload } from '../router';
 import store from '../store/_index';
-import reviews from '../store/reviews.js';
 import { setAudioUtterance } from './audioPlayer';
 import { addCtxListeners } from './ctx/ctxComponent';
 import { beforeCtxRemarks } from './ctx/ctxRemarks.js';
 import stars, { addStarListeners } from './ctx/reviews/stars';
 import { loadSpin } from './loadingSpinner';
 
-const { dictionary, remarks, poems } = store;
+const { dictionary, remarks, poems, reviews } = store;
 
 export default () => {
-  const poem = store.poems.getPoem();
+  const poem = poems.getPoem();
   const title = poem.title ?? '';
   const author = poem.author ?? '';
   const content = poem.content ?? '...';
@@ -23,7 +22,7 @@ export default () => {
         <h5 id="poem-author">${author}</h5>
         <div id="reviews-stars-btn-container">
           <button id="reviews-context-btn">reviews</button>
-          ${stars('main')}
+          ${stars('main', 'dark', undefined, 23, reviews.activeAvgRating)}
         </div>
       </div>
       <pre id="poem-content">${content}</pre>
