@@ -6,7 +6,7 @@ import ctxDictionary from './ctxDictionary';
 import ctxRemarks, { afterCtxRemarks } from './ctxRemarks';
 import ctxReviews, { setupCtxReview } from './reviews/ctxReviews';
 
-const { poems } = store;
+const { poems, reviews } = store;
 
 export default () => {
   if (poems.noContext()) {
@@ -34,6 +34,8 @@ export function addCtxListeners() {
 
   // all contexts have an exit button
   document.getElementById('exit-btn')?.addEventListener('click', () => {
+    if (poems.context === 'Reviews') reviews.clearActiveRating();
+
     poems.clearContext();
     reload();
   });

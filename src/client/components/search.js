@@ -4,7 +4,7 @@ import { getCompositionByTitleAuthor } from '../network/rhymeRemarksApi.js';
 import { reload } from '../router.js';
 import store from '../store/_index.js';
 
-const { search, poems } = store;
+const { search, poems, reviews } = store;
 
 export default () => {
   return html`
@@ -97,6 +97,8 @@ export function addSearchListeners() {
     }
 
     poems.addPoem(poem);
+
+    await reviews.syncActiveReadonlyReviews();
 
     titleInput.setAttribute('placeholder', 'title');
     authorInput.setAttribute('placeholder', 'author');

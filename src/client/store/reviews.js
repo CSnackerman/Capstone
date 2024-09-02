@@ -7,6 +7,7 @@ const REVIEW_SUBMITTED = 'review_submitted';
 export default {
   editable: {},
   readonly: {},
+  activeAvgRating: undefined,
   // readonly methods
   async syncActiveReadonlyReviews() {
     const res = await getReviewsByTitleAuthor(
@@ -22,6 +23,7 @@ export default {
     const key = getActiveKey();
     const stripIdentifiers = ({ rating, review }) => ({ rating, review });
     this.readonly[key] = reviews.map(stripIdentifiers);
+    this.activeAvgRating = this.getActiveReadonlyReviewAvg();
   },
   activeReadonlyIsSynced() {
     return getActiveKey() in this.readonly;
@@ -36,6 +38,28 @@ export default {
 
     if (key in this.readonly) {
       return this.readonly[key].length;
+    }
+
+    return 0;
+  },
+  getActiveReadonlyReviewAvg() {
+    const key = getActiveKey();
+
+    const exists = key in this.readonly;
+
+    if (!exists) return 0;
+
+    const reviews = this.getActiveReadonlyReviews();
+
+    const totalStars = reviews.reduce(
+      (runningTotal, review) => (runningTotal += review.rating),
+      0
+    );
+
+    const count = this.getActiveReadonlyReviewCount();
+
+    if (count > 0) {
+      return Math.floor(totalStars / count);
     }
 
     return 0;
@@ -69,7 +93,12 @@ export default {
       return;
     }
   },
-
+  clearActiveRating() {
+    const key = getActiveKey();
+    if (key in this.editable) {
+      this.editable[key].rating = undefined;
+    }
+  },
   setActiveReview_DRAFT() {
     const key = getActiveKey();
     this.editable[key].status = REVIEW_DRAFT;
