@@ -30,6 +30,13 @@
   cursor: pointer;
 }
 
+@media (width <= 500px) {
+  .ctx-component {
+    max-width: 87vw;
+    width: 100%;
+  }
+}
+
 /* dictionary */
 
 .ctx-dictionary {

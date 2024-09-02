@@ -1,5 +1,6 @@
 #poems-view {
   width: 95%;
+  margin-top: 7.7vh;
 }
 
 #author-review-container {
@@ -29,4 +30,11 @@
 
 .star:hover:not(.readonly) {
   cursor: pointer;
+}
+
+@media (width <= 500px) {
+  .contextual {
+    grid-template-columns: 1fr;
+    row-gap: 3rem;
+  }
 }

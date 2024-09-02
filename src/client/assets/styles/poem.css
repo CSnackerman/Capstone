@@ -103,3 +103,17 @@
   cursor: pointer;
   filter: brightness(1.5);
 }
+
+@media (width <= 500px) {
+  #poem-content {
+    width: 85vw;
+  }
+
+  #poem-buttons {
+    width: 90%;
+    justify-content: stretch;
+    margin: auto;
+    margin-top: 1rem;
+    gap: 3rem;
+  }
+}
