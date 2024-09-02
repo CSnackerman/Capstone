@@ -1,0 +1,38 @@
+.ctx-component {
+  position: relative;
+  text-align: center;
+  background-image: linear-gradient(45deg, #2e150ba1, rgb(48, 27, 12));
+  border: 10px ridge #a38c6dbe;
+  padding: 0.5rem;
+  max-height: min-content;
+  color: lightgoldenrodyellow;
+  min-width: 35vw;
+  max-width: 40vw;
+}
+
+.ctx-component > div {
+  border: none;
+  background-image: none;
+}
+
+#ctx-title {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+#exit-btn {
+  position: absolute;
+  right: 1rem;
+}
+
+#exit-btn:hover {
+  filter: brightness(1.5);
+  cursor: pointer;
+}
+
+@media (width <= 500px) {
+  .ctx-component {
+    max-width: 87vw;
+    width: 100%;
+  }
+}
