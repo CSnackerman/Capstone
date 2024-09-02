@@ -8,8 +8,8 @@ export const post = async (url, requestBody) => {
       body: JSON.stringify(requestBody),
     });
   } catch (err) {
-    console.error('[post]', err);
-    return null;
+    console.debug('[post]', err);
+    return { ok: false };
   }
 };
 
@@ -17,8 +17,8 @@ export const get = async (url) => {
   try {
     return await fetch(url);
   } catch (err) {
-    console.error('[get]', err);
-    return null;
+    console.debug('[get]', err);
+    return { ok: false };
   }
 };
 
@@ -32,8 +32,8 @@ export const erase = async (url, requestBody) => {
       body: JSON.stringify(requestBody),
     });
   } catch (err) {
-    console.error('[delete]', err);
-    return null;
+    console.debug('[erase]', err);
+    return { ok: false };
   }
 };
 
@@ -47,7 +47,7 @@ export const update = async (url, requestBody) => {
       body: JSON.stringify(requestBody),
     });
   } catch (err) {
-    console.error('[update]', err);
-    return null;
+    console.debug('[update]', err);
+    return { ok: false };
   }
 };

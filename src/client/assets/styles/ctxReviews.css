@@ -1,0 +1,105 @@
+/* review draft & core review */
+
+#ctx-reviews {
+  text-align: end;
+  min-width: 10vw;
+}
+
+#review-form-container {
+  display: grid;
+  grid-template-rows: auto auto auto;
+}
+
+#review-form-stars {
+  border-radius: 5px;
+  margin: 0.5rem;
+  margin-left: 0;
+}
+
+#review-textarea {
+  text-align: start;
+  width: 100%;
+  height: 10rem;
+}
+
+#review-submit {
+  font-size: 0.8rem;
+  padding: 0.2rem;
+  margin: 0.1rem;
+  margin-right: 0;
+}
+
+#stars-required {
+  font-size: 0.8rem;
+  color: red;
+  text-align: start;
+  visibility: hidden;
+}
+
+/* review submitted */
+
+#review-submitted {
+  background-color: #ffd90017;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  text-align: start;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+#review-submitted-content {
+  min-height: 3rem;
+}
+
+#review-submitted-buttons {
+  display: flex;
+  justify-content: end;
+  gap: 2px;
+}
+
+.review-submitted-button {
+  font-size: 0.8rem;
+  padding: 0.2rem 0.3rem;
+  background-color: #a52a2a44;
+  color: white;
+}
+
+/* reviews readonly */
+
+#reviews-readonly {
+  max-height: 42vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  border: 1px solid burlywood;
+  border-radius: 0.3rem;
+}
+
+#review-item {
+  min-height: 7rem;
+  padding: 0.5rem;
+  padding-right: 1rem;
+  background-color: #2015079d;
+  border: 1px solid burlywood;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  text-align: start;
+}
+
+#review-item:first-of-type {
+  border-top: none;
+}
+
+#review-item:last-of-type {
+  border-bottom: none;
+}
+
+#readonly-stars {
+  cursor: default;
+  margin-bottom: 3px;
+}
+
+#readonly-review-content {
+  text-align: start;
+  font-size: 0.8rem;
+}

@@ -11,5 +11,8 @@
 @import 'loading.css';
 @import 'scrawlings.css';
 @import 'notFound.css';
-@import 'ctx.css';
+@import 'ctxComponent.css';
+@import 'ctxDictionary.css';
+@import 'ctxRemarks.css';
+@import 'ctxReviews.css';
 @import 'search.css';

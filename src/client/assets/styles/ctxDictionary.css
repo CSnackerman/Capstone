@@ -1,0 +1,40 @@
+.ctx-dictionary {
+  text-align: start;
+  font-weight: normal;
+}
+
+#scrollable-defs {
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: 0 10px;
+}
+
+#word-audio-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#word {
+  font-size: 1.3rem;
+}
+
+#pos {
+  font-weight: normal;
+  font-family: monospace;
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+#def-list {
+  list-style: lower-roman;
+  list-style-position: outside;
+
+  line-height: 1.3rem;
+}
+
+#def {
+  font-family: serif;
+  font-size: 0.9rem;
+}
