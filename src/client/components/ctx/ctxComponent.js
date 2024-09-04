@@ -3,10 +3,10 @@ import closeSvg from '../../assets/images/close.svg';
 import { reload } from '../../router';
 import store from '../../store/_index';
 import ctxDictionary from './ctxDictionary';
-import ctxRemarks, { afterCtxRemarks } from './ctxRemarks';
-import ctxReviews, { setupCtxReview } from './reviews/ctxReviews';
+import ctxRemarks, { addCtxRemarksListeners } from './ctxRemarks';
+import ctxReviews, { addCtxReviewListeners } from './reviews/ctxReviews';
 
-const { poems, reviews } = store;
+const { poems } = store;
 
 export default () => {
   if (poems.noContext()) {
@@ -29,13 +29,11 @@ export default () => {
 };
 
 export function addCtxListeners() {
-  if (poems.context === 'Reviews') setupCtxReview();
-  if (poems.context === 'Remarks') afterCtxRemarks();
+  if (poems.context === 'Reviews') addCtxReviewListeners();
+  if (poems.context === 'Remarks') addCtxRemarksListeners();
 
   // all contexts have an exit button
   document.getElementById('exit-btn')?.addEventListener('click', () => {
-    if (poems.context === 'Reviews') reviews.clearActiveRating();
-
     poems.clearContext();
     reload();
   });

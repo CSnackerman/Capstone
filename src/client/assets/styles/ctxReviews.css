@@ -5,12 +5,12 @@
   min-width: 10vw;
 }
 
-#review-form-container {
+#review-draft-container {
   display: grid;
   grid-template-rows: auto auto auto;
 }
 
-#review-form-stars {
+#review-draft-stars {
   border-radius: 5px;
   margin: 0.5rem;
   margin-left: 0;

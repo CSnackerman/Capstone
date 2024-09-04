@@ -43,11 +43,7 @@ export default () => {
   `;
 };
 
-export async function beforeCtxRemarks() {
-  await refreshComments();
-}
-
-export function afterCtxRemarks() {
+export function addCtxRemarksListeners() {
   const form = document.getElementById('remark-form');
   const submitBtn = document.getElementById('remark-submit');
 
@@ -67,7 +63,7 @@ export function afterCtxRemarks() {
 
     if (res.ok) {
       submitBtn.value = 'Published ✅';
-      await refreshComments();
+      await refreshRemarkComments();
       form.reset();
       reload();
     } else {
@@ -78,6 +74,15 @@ export function afterCtxRemarks() {
       submitBtn.value = 'Publish';
     }, 3000);
   });
+}
+
+export async function refreshRemarkComments() {
+  const res = await getRemarksByChunk(remarks.chunk);
+
+  if (res.ok) {
+    const comments = await res.json();
+    remarks.setComments(comments);
+  }
 }
 
 // util
@@ -92,13 +97,4 @@ function getCommentsHtml() {
       </div>
     `
   );
-}
-
-async function refreshComments() {
-  const res = await getRemarksByChunk(remarks.chunk);
-
-  if (res.ok) {
-    const comments = await res.json();
-    remarks.setComments(comments);
-  }
 }

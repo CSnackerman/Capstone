@@ -1,15 +1,16 @@
 import { getReviewsByTitleAuthor } from '../network/rhymeRemarksApi.js';
 import poems from './poems.js';
 
-const REVIEW_DRAFT = 'review_draft';
-const REVIEW_SUBMITTED = 'review_submitted';
+export const DRAFT = 'draft';
+export const SUBMITTED = 'submitted';
 
 export default {
   editable: {},
   readonly: {},
   activeAvgRating: undefined,
+
   // readonly methods
-  async syncActiveReadonlyReviews() {
+  async syncReadonlyReviews() {
     const res = await getReviewsByTitleAuthor(
       poems.getTitle(),
       poems.getAuthor()
@@ -17,24 +18,21 @@ export default {
 
     const reviews = await res.json();
 
-    this.storeActiveReadonlyReviews(reviews);
-  },
-  storeActiveReadonlyReviews(reviews) {
-    const key = getActiveKey();
+    const key = getKey();
     const stripIdentifiers = ({ rating, review }) => ({ rating, review });
     this.readonly[key] = reviews.map(stripIdentifiers);
-    this.activeAvgRating = this.getActiveReadonlyReviewAvg();
+    this.activeAvgRating = this.calcReadonlyAvgRating();
   },
-  activeReadonlyIsSynced() {
-    return getActiveKey() in this.readonly;
+  isReadonlySynced() {
+    return getKey() in this.readonly;
   },
-  getActiveReadonlyReviews() {
-    const key = getActiveKey();
+  getReadonlyReviews() {
+    const key = getKey();
 
     return this.readonly[key] ?? [];
   },
-  getActiveReadonlyReviewCount() {
-    const key = getActiveKey();
+  getReadonlyReviewCount() {
+    const key = getKey();
 
     if (key in this.readonly) {
       return this.readonly[key].length;
@@ -42,21 +40,21 @@ export default {
 
     return 0;
   },
-  getActiveReadonlyReviewAvg() {
-    const key = getActiveKey();
+  calcReadonlyAvgRating() {
+    const key = getKey();
 
     const exists = key in this.readonly;
 
     if (!exists) return 0;
 
-    const reviews = this.getActiveReadonlyReviews();
+    const reviews = this.getReadonlyReviews();
 
     const totalStars = reviews.reduce(
       (runningTotal, review) => (runningTotal += review.rating),
       0
     );
 
-    const count = this.getActiveReadonlyReviewCount();
+    const count = this.getReadonlyReviewCount();
 
     if (count > 0) {
       return Math.floor(totalStars / count);
@@ -64,95 +62,96 @@ export default {
 
     return 0;
   },
+  getReadonlyAvgRating() {
+    return this.activeAvgRating;
+  },
+
   // editable methods
   initEditableEntry() {
-    const key = getActiveKey();
+    const key = getKey();
 
     if (key in this.editable) return;
 
     this.editable[key] = {
-      status: REVIEW_DRAFT,
+      status: DRAFT,
       cloudId: undefined,
       rating: undefined,
       review: undefined,
     };
   },
-  setActiveReview(review) {
-    const key = getActiveKey();
+  setReview(review) {
+    const key = getKey();
 
     if (key in this.editable) {
       this.editable[key].review = review;
       return;
     }
   },
-  setActiveRating(rating) {
-    const key = getActiveKey();
+  setRating(rating) {
+    const key = getKey();
 
     if (key in this.editable) {
       this.editable[key].rating = rating;
       return;
     }
   },
-  clearActiveRating() {
-    const key = getActiveKey();
+  clearRating() {
+    const key = getKey();
     if (key in this.editable) {
       this.editable[key].rating = undefined;
     }
   },
-  setActiveReview_DRAFT() {
-    const key = getActiveKey();
-    this.editable[key].status = REVIEW_DRAFT;
-  },
-  setActiveReview_SUBMITTED() {
-    const key = getActiveKey();
-    this.editable[key].status = REVIEW_SUBMITTED;
-  },
-  getActiveReview() {
-    const key = getActiveKey();
+  getReview() {
+    const key = getKey();
     return this.editable[key]?.review;
   },
-  getActiveRating() {
-    const key = getActiveKey();
+  getRating() {
+    const key = getKey();
     return this.editable[key]?.rating;
   },
-  getActiveStatus() {
-    const key = getActiveKey();
+  setStatus(status) {
+    if (![DRAFT, SUBMITTED].includes(status)) {
+      throw 'invalid review status';
+    }
+
+    this.editable[getKey()].status = status;
+  },
+  getStatus() {
+    const key = getKey();
     return this.editable[key]?.status;
   },
-  activeIsDraftStatus() {
-    return this.getActiveStatus() === REVIEW_DRAFT;
+  isDraftStatus() {
+    return this.getStatus() === DRAFT;
   },
-  activeIsSubittedStatus() {
-    return this.getActiveStatus() === REVIEW_SUBMITTED;
+  isSubmittedStatus() {
+    return this.getStatus() === SUBMITTED;
   },
-  setActiveCloudId(id) {
-    const key = getActiveKey();
+  setCloudId(id) {
+    const key = getKey();
     this.editable[key].cloudId = id;
 
     console.log('active-editable', this.editable[key]);
   },
-  getActiveCloudId() {
-    return this.editable[getActiveKey()].cloudId;
+  getCloudId() {
+    return this.editable[getKey()].cloudId;
   },
-  resetActiveDraft() {
-    this.editable[getActiveKey()] = {
-      status: REVIEW_DRAFT,
+  resetDraft() {
+    this.editable[getKey()] = {
+      status: DRAFT,
       cloudId: undefined,
       rating: undefined,
       review: undefined,
     };
   },
   hasCloudId() {
-    return !!this.editable[getActiveKey()]?.cloudId;
+    return !!this.editable[getKey()]?.cloudId;
   },
 };
 
 // util
 
-function createReviewKey(title, author) {
-  return `${title.replace(/ /g, '_')}&&&${author.replace(/ /g, '_')}`;
-}
-
-function getActiveKey() {
-  return createReviewKey(poems.getTitle(), poems.getAuthor());
+function getKey() {
+  const keyTitle = poems.getTitle().replace(/ /g, '_');
+  const keyAuthor = poems.getAuthor().replace(/ /g, '_');
+  return `${keyTitle}&&&${keyAuthor}`;
 }

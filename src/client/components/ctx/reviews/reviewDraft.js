@@ -5,7 +5,8 @@ import {
 } from '../../../network/rhymeRemarksApi.js';
 import { reload } from '../../../router.js';
 import store from '../../../store/_index.js';
-import stars from './stars.js';
+import { SUBMITTED } from '../../../store/reviews.js';
+import stars, { INTERACTABLE, LIGHT } from './stars.js';
 
 const { reviews, poems } = store;
 
@@ -13,9 +14,13 @@ export default () => {
   const submitValue = reviews.hasCloudId() ? 'Update' : 'Submit';
 
   return html`
-    <div id="review-form-container">
+    <div id="review-draft-container">
       <div id="stars-required">Star rating required</div>
-      ${stars('review-form', 'light')}
+      ${stars('review-draft', {
+        type: INTERACTABLE,
+        mode: LIGHT,
+        getRatingFunc: () => reviews.getRating(),
+      })}
       <form id="review-form">
         <textarea
           id="review-textarea"
@@ -36,18 +41,16 @@ export function addReviewFormListeners() {
   const starsRequired = document.getElementById('stars-required');
 
   // restore review (if applicable)
-  textarea.value = reviews.getActiveReview() ?? '';
+  textarea.value = reviews.getReview() ?? '';
 
   // store review progress
-  textarea.addEventListener('keyup', () =>
-    reviews.setActiveReview(textarea.value)
-  );
+  textarea.addEventListener('keyup', () => reviews.setReview(textarea.value));
 
   // submit/update review
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    if (!reviews.getActiveRating()) {
+    if (!reviews.getRating()) {
       starsRequired.style.visibility = 'visible';
       submitBtn.value = 'Submit ⚠️';
       return;
@@ -60,7 +63,7 @@ export function addReviewFormListeners() {
     const requestBody = {
       title: poems.getTitle(),
       author: poems.getAuthor(),
-      rating: reviews.getActiveRating(),
+      rating: reviews.getRating(),
       review: new FormData(form).get('review'),
     };
 
@@ -68,7 +71,7 @@ export function addReviewFormListeners() {
     if (reviews.hasCloudId()) {
       delete requestBody.title;
       delete requestBody.author;
-      res = await updateReviewById(reviews.getActiveCloudId(), requestBody);
+      res = await updateReviewById(reviews.getCloudId(), requestBody);
     } else {
       res = await postReview(requestBody);
     }
@@ -82,7 +85,7 @@ export function addReviewFormListeners() {
     const review = await res.json();
 
     if (!reviews.hasCloudId()) {
-      reviews.setActiveCloudId(review._id);
+      reviews.setCloudId(review._id);
     }
 
     form.reset();
@@ -93,7 +96,7 @@ export function addReviewFormListeners() {
       submitBtn.disabled = false;
     }, 3000);
 
-    reviews.setActiveReview_SUBMITTED();
+    reviews.setStatus(SUBMITTED);
     reload();
   });
 }

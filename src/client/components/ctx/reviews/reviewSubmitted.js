@@ -2,17 +2,21 @@ import html from 'html-literal';
 import { deleteReviewById } from '../../../network/rhymeRemarksApi.js';
 import { reload } from '../../../router.js';
 import store from '../../../store/_index.js';
-import stars from './stars.js';
+import { DRAFT } from '../../../store/reviews.js';
+import stars, { LIGHT, READONLY } from './stars.js';
 
 const { reviews } = store;
 
 export default () => {
-  const rating = reviews.getActiveRating();
-  const review = reviews.getActiveReview();
+  const review = reviews.getReview();
 
   return html`
     <div id="review-submitted">
-      ${stars('submitted', 'light', rating)}
+      ${stars('submitted', {
+        type: READONLY,
+        mode: LIGHT,
+        getRatingFunc: () => reviews.getRating(),
+      })}
       <div id="review-submitted-content">${review}</div>
       <div id="review-submitted-buttons">
         <button id="edit-review-btn" class="review-submitted-button">
@@ -29,18 +33,18 @@ export function addReviewSubmittedListeners() {
   const deleteBtn = document.getElementById('delete-btn');
 
   editBtn.addEventListener('click', () => {
-    reviews.setActiveReview_DRAFT();
+    reviews.setStatus(DRAFT);
     reload();
   });
 
   deleteBtn.addEventListener('click', async () => {
-    const res = await deleteReviewById(reviews.getActiveCloudId());
+    const res = await deleteReviewById(reviews.getCloudId());
 
     if (!res.ok) {
       console.log('idk something is wrong');
     }
 
-    reviews.resetActiveDraft();
+    reviews.resetDraft();
     reload();
   });
 }

@@ -1,11 +1,12 @@
 import html from 'html-literal';
-import { rerender } from '..';
 import { ctxComponent, poem, search } from '../components/_index';
+import { addStarListeners } from '../components/ctx/reviews/stars.js';
+import { loadSpin } from '../components/loadingSpinner.js';
 import { addPoemListeners } from '../components/poem';
 import { addSearchListeners } from '../components/search.js';
 import store from '../store/_index';
 
-const { loadingSpinner, poems } = store;
+const { reviews, poems } = store;
 
 export default () => {
   // prettier-ignore
@@ -28,10 +29,9 @@ export default () => {
 export const poemHooks = {
   async before(done) {
     if (poems.index === -1) {
-      loadingSpinner.enable();
-      rerender();
+      loadSpin();
       await poems.next();
-      loadingSpinner.disable();
+      await reviews.syncReadonlyReviews();
     }
 
     done();
@@ -41,6 +41,7 @@ export const poemHooks = {
   },
   after() {
     addPoemListeners();
+    addStarListeners();
     addSearchListeners();
     poems.restoreContext();
   },
