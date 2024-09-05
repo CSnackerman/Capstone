@@ -9,7 +9,7 @@
   font-style: italic;
 }
 
-#remark-form {
+#remark-form-ex {
   display: grid;
   grid-template-areas:
     'username username'
@@ -18,7 +18,7 @@
   gap: 0.3rem;
 }
 
-#remark-name-input {
+#remark-poster-text-input {
   grid-area: username;
 }
 
@@ -26,12 +26,12 @@
   grid-area: comment;
 }
 
-#remark-textarea {
+#remark-comment-textarea {
   width: 100%;
   height: 5rem;
 }
 
-#remark-submit {
+#remark-form-ex-submit {
   grid-area: publish;
   font-size: 0.9rem;
   padding: 1rem 3px;

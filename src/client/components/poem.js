@@ -3,7 +3,6 @@ import { reload } from '../router';
 import store from '../store/_index';
 import { setAudioUtterance } from './audioPlayer';
 import { addCtxListeners } from './ctx/ctxComponent';
-import { refreshRemarkComments } from './ctx/ctxRemarks.js';
 import stars, { AVERAGE, READONLY } from './ctx/reviews/stars';
 import { loadSpin } from './loadingSpinner';
 
@@ -70,7 +69,7 @@ export function addPoemListeners() {
       remarks.setChunk(selectedText);
 
       loadSpin();
-      await refreshRemarkComments();
+      await remarks.syncComments();
       reload();
     }
   });
