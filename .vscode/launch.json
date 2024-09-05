@@ -11,6 +11,8 @@
       "url": "http://localhost:1234",
       "skipFiles": ["<node_internals>/**"],
       "webRoot": "${workspaceFolder}",
+      "trace": true,
+      "sourceMaps": true,
       "sourceMapPathOverrides": {
         "/__parcel_source_root/*": "${webRoot}/*"
       }
