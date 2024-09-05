@@ -1,0 +1,19 @@
+.default-form-ex {
+  background-color: darkred;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.default-form-ex input[type='submit'] {
+  font-size: 1rem;
+  padding: 0 0.3rem;
+}
+
+.default-form-ex label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.default-form-ex > label > span {
+  padding: 10px 0;
+}
