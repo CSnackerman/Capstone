@@ -121,7 +121,9 @@ export function addFormExEventListeners(id) {
 
     if (res.ok) {
       submitBtn.value = success;
-      dispatchEvent(new Event(config.refreshEventId));
+      if (config.refreshEventId) {
+        dispatchEvent(new Event(config.refreshEventId));
+      }
       form.reset();
     } else {
       submitBtn.value = failure;
