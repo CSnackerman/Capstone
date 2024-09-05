@@ -1,4 +1,4 @@
-import { postRemark } from '../network/rhymeRemarksApi.js';
+import { postFeedbackMessage, postRemark } from '../network/rhymeRemarksApi.js';
 import remarks from './remarks.js';
 
 export default {
@@ -26,6 +26,39 @@ export default {
       pending: 'Publishing ⏳',
       success: 'Published ✅',
       Failure: 'Failed ⛔',
+    },
+  },
+  // ---
+  contact: {
+    fields: [
+      {
+        name: 'from',
+        label: 'Name',
+        inputType: 'text',
+        attributes: { required: true },
+      },
+      {
+        name: 'email',
+        label: 'Email',
+        inputType: 'text',
+        attributes: { required: false },
+      },
+      {
+        name: 'message',
+        label: 'Message',
+        inputType: 'textarea',
+        attributes: { required: true },
+      },
+    ],
+    additionalData: {},
+    dataDefaults: {},
+    postRequestCallback: postFeedbackMessage,
+    refreshEventId: null,
+    submitButton: {
+      base: 'Send',
+      pending: 'Sending ⏳',
+      success: 'Sent ✅',
+      Failure: 'Not Sent ⛔',
     },
   },
 };
