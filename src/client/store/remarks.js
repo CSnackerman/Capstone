@@ -1,3 +1,6 @@
+import { getRemarksByChunk } from '../network/rhymeRemarksApi.js';
+import { getDateTimeString } from '../utils/dateUtils.js';
+
 export default {
   highlightEnabled: false,
   chunk: '',
@@ -7,17 +10,31 @@ export default {
 
     this.chunk = textSelection;
   },
-  setComments(comments) {
-    this.comments = comments.map(({ _id, poster, comment, postedAt }) => ({
-      id: _id,
-      poster: `@${poster}`,
-      comment,
-      postedAt: `${new Date(postedAt).toLocaleDateString('en-US', {
-        timeZone: 'America/Chicago',
-      })}<br/>${new Date(postedAt).toLocaleTimeString('en-US', {
-        timeZone: 'America/Chicago',
-      })}`,
-    }));
+  getSanitizedChunk() {
+    return this.chunk.replace(/\n/g, '/n');
+  },
+  async syncComments() {
+    const res = await getRemarksByChunk(this.getSanitizedChunk());
+
+    if (res.ok) {
+      const rawComments = await res.json();
+      this.comments = rawComments.map(({ _id, poster, comment, postedAt }) => ({
+        id: _id,
+        poster: `@${poster}`,
+        comment,
+        postedAt: getDateTimeString(postedAt),
+      }));
+      return;
+    }
+
+    this.comments = [
+      {
+        id: undefined,
+        poster: '@Error',
+        comment: 'Something went wrong.',
+        postedAt: getDateTimeString(),
+      },
+    ];
   },
   enableHighlight() {
     this.highlightEnabled = true;

@@ -1,39 +1,23 @@
 /* review draft & core review */
-
-#ctx-reviews {
-  text-align: end;
-  min-width: 10vw;
+#review-draft-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-#review-form-container {
+#review-form-ex {
   display: grid;
-  grid-template-rows: auto auto auto;
+  row-gap: 2px;
 }
 
-#review-form-stars {
-  border-radius: 5px;
-  margin: 0.5rem;
-  margin-left: 0;
+#review-review-textarea {
+  min-height: 10ch;
 }
 
-#review-textarea {
-  text-align: start;
-  width: 100%;
-  height: 10rem;
-}
-
-#review-submit {
+#review-form-ex-submit {
+  justify-self: end;
+  padding: 3px;
   font-size: 0.8rem;
-  padding: 0.2rem;
-  margin: 0.1rem;
-  margin-right: 0;
-}
-
-#stars-required {
-  font-size: 0.8rem;
-  color: red;
-  text-align: start;
-  visibility: hidden;
 }
 
 /* review submitted */
@@ -66,7 +50,7 @@
 
 /* reviews readonly */
 
-#reviews-readonly {
+#reviews-readonly:not(.empty) {
   max-height: 42vh;
   overflow-y: auto;
   scrollbar-width: thin;
@@ -74,7 +58,15 @@
   border-radius: 0.3rem;
 }
 
-#review-item {
+.review-item {
+  display: grid;
+  grid-template-rows: min-content auto min-content;
+  grid-template-columns: auto auto;
+  grid-template-areas:
+    'stars   date'
+    'content content'
+    '....... buttons';
+  row-gap: 3px;
   min-height: 7rem;
   padding: 0.5rem;
   padding-right: 1rem;
@@ -86,20 +78,46 @@
   text-align: start;
 }
 
-#review-item:first-of-type {
+.review-item:first-of-type {
   border-top: none;
 }
 
-#review-item:last-of-type {
+.review-item:last-of-type {
   border-bottom: none;
 }
 
 #readonly-stars {
   cursor: default;
-  margin-bottom: 3px;
+  grid-area: stars;
 }
 
-#readonly-review-content {
+.readonly-review-date {
+  height: min-content;
+  grid-area: date;
+  font-size: 0.65rem;
+  justify-self: end;
+}
+
+.readonly-review-content {
+  grid-area: content;
   text-align: start;
   font-size: 0.8rem;
+}
+
+.readonly-review-buttons {
+  grid-area: buttons;
+  justify-self: end;
+  align-self: end;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: fit-content;
+  height: min-content;
+  column-gap: 3px;
+}
+
+.readonly-review-buttons > button {
+  font-size: 0.8rem;
+  padding: 3px;
+  width: auto;
 }

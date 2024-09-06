@@ -3,8 +3,7 @@ import { reload } from '../router';
 import store from '../store/_index';
 import { setAudioUtterance } from './audioPlayer';
 import { addCtxListeners } from './ctx/ctxComponent';
-import { beforeCtxRemarks } from './ctx/ctxRemarks.js';
-import stars, { addStarListeners } from './ctx/reviews/stars';
+import stars, { AVERAGE, READONLY } from './ctx/reviews/stars';
 import { loadSpin } from './loadingSpinner';
 
 const { dictionary, remarks, poems, reviews } = store;
@@ -22,7 +21,10 @@ export default () => {
         <h5 id="poem-author">${author}</h5>
         <div id="reviews-stars-btn-container">
           <button id="reviews-context-btn">reviews</button>
-          ${stars('main', 'dark', undefined, 23, reviews.activeAvgRating)}
+          ${stars('main', {
+            type: [AVERAGE, READONLY],
+            getRatingFunc: () => reviews.getReadonlyAvgRating(),
+          })}
         </div>
       </div>
       <pre id="poem-content">${content}</pre>
@@ -43,12 +45,10 @@ export function addPoemListeners() {
   const reviewsBtn = document.getElementById('reviews-context-btn');
 
   // reviews
-  addStarListeners();
-
   reviewsBtn.addEventListener('click', async () => {
     poems.setReviewsContext();
     loadSpin();
-    await reviews.syncActiveReadonlyReviews();
+    await reviews.syncReadonlyReviews();
     reload();
   });
 
@@ -69,7 +69,7 @@ export function addPoemListeners() {
       remarks.setChunk(selectedText);
 
       loadSpin();
-      await beforeCtxRemarks();
+      await remarks.syncComments();
       reload();
     }
   });

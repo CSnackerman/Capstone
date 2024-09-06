@@ -19,5 +19,10 @@ export default mongoose.model(
       type: String,
       required: true,
     },
+    postedAt: {
+      type: Date,
+      required: true,
+      default: new Date(),
+    },
   })
 );

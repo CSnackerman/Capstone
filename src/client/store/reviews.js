@@ -1,15 +1,18 @@
 import { getReviewsByTitleAuthor } from '../network/rhymeRemarksApi.js';
+import { reload } from '../router.js';
 import poems from './poems.js';
 
-const REVIEW_DRAFT = 'review_draft';
-const REVIEW_SUBMITTED = 'review_submitted';
+export const DRAFT = 'draft';
+export const EDIT = 'edit';
+export const SUBMITTED = 'submitted';
 
 export default {
-  editable: {},
+  draft: {},
   readonly: {},
   activeAvgRating: undefined,
+
   // readonly methods
-  async syncActiveReadonlyReviews() {
+  async syncReadonlyReviews() {
     const res = await getReviewsByTitleAuthor(
       poems.getTitle(),
       poems.getAuthor()
@@ -17,24 +20,30 @@ export default {
 
     const reviews = await res.json();
 
-    this.storeActiveReadonlyReviews(reviews);
+    const key = getKey();
+    const desiredProps = ({ _id, rating, review, postedAt }) => ({
+      cloudId: _id,
+      rating,
+      review,
+      postedAt,
+    });
+    this.readonly[key] = reviews.map(desiredProps);
+    this.activeAvgRating = this.calcReadonlyAvgRating();
   },
-  storeActiveReadonlyReviews(reviews) {
-    const key = getActiveKey();
-    const stripIdentifiers = ({ rating, review }) => ({ rating, review });
-    this.readonly[key] = reviews.map(stripIdentifiers);
-    this.activeAvgRating = this.getActiveReadonlyReviewAvg();
+  isReadonlySynced() {
+    return getKey() in this.readonly;
   },
-  activeReadonlyIsSynced() {
-    return getActiveKey() in this.readonly;
-  },
-  getActiveReadonlyReviews() {
-    const key = getActiveKey();
+  getSortedReadonlyReviews() {
+    const key = getKey();
 
-    return this.readonly[key] ?? [];
+    const readonlyReviews = this.readonly[key] ?? [];
+
+    readonlyReviews.sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+
+    return readonlyReviews;
   },
-  getActiveReadonlyReviewCount() {
-    const key = getActiveKey();
+  getReadonlyReviewCount() {
+    const key = getKey();
 
     if (key in this.readonly) {
       return this.readonly[key].length;
@@ -42,21 +51,21 @@ export default {
 
     return 0;
   },
-  getActiveReadonlyReviewAvg() {
-    const key = getActiveKey();
+  calcReadonlyAvgRating() {
+    const key = getKey();
 
     const exists = key in this.readonly;
 
     if (!exists) return 0;
 
-    const reviews = this.getActiveReadonlyReviews();
+    const reviews = this.getSortedReadonlyReviews();
 
     const totalStars = reviews.reduce(
       (runningTotal, review) => (runningTotal += review.rating),
       0
     );
 
-    const count = this.getActiveReadonlyReviewCount();
+    const count = this.getReadonlyReviewCount();
 
     if (count > 0) {
       return Math.floor(totalStars / count);
@@ -64,95 +73,112 @@ export default {
 
     return 0;
   },
-  // editable methods
+  getReadonlyAvgRating() {
+    return this.activeAvgRating;
+  },
   initEditableEntry() {
-    const key = getActiveKey();
+    const key = getKey();
 
-    if (key in this.editable) return;
+    if (key in this.draft) return;
 
-    this.editable[key] = {
-      status: REVIEW_DRAFT,
+    this.draft[key] = {
+      status: DRAFT,
       cloudId: undefined,
       rating: undefined,
       review: undefined,
+      postedAt: undefined,
     };
   },
-  setActiveReview(review) {
-    const key = getActiveKey();
+  setReview(review) {
+    const key = getKey();
 
-    if (key in this.editable) {
-      this.editable[key].review = review;
+    if (key in this.draft) {
+      this.draft[key].review = review;
       return;
     }
   },
-  setActiveRating(rating) {
-    const key = getActiveKey();
+  setRating(rating) {
+    const key = getKey();
 
-    if (key in this.editable) {
-      this.editable[key].rating = rating;
+    if (key in this.draft) {
+      this.draft[key].rating = rating;
       return;
     }
   },
-  clearActiveRating() {
-    const key = getActiveKey();
-    if (key in this.editable) {
-      this.editable[key].rating = undefined;
+  clearRating() {
+    const key = getKey();
+    if (key in this.draft) {
+      this.draft[key].rating = undefined;
     }
   },
-  setActiveReview_DRAFT() {
-    const key = getActiveKey();
-    this.editable[key].status = REVIEW_DRAFT;
+  getReview() {
+    const key = getKey();
+    return this.draft[key]?.review;
   },
-  setActiveReview_SUBMITTED() {
-    const key = getActiveKey();
-    this.editable[key].status = REVIEW_SUBMITTED;
+  getRating() {
+    const key = getKey();
+    return this.draft[key]?.rating;
   },
-  getActiveReview() {
-    const key = getActiveKey();
-    return this.editable[key]?.review;
-  },
-  getActiveRating() {
-    const key = getActiveKey();
-    return this.editable[key]?.rating;
-  },
-  getActiveStatus() {
-    const key = getActiveKey();
-    return this.editable[key]?.status;
-  },
-  activeIsDraftStatus() {
-    return this.getActiveStatus() === REVIEW_DRAFT;
-  },
-  activeIsSubittedStatus() {
-    return this.getActiveStatus() === REVIEW_SUBMITTED;
-  },
-  setActiveCloudId(id) {
-    const key = getActiveKey();
-    this.editable[key].cloudId = id;
+  setStatus(status) {
+    if (![DRAFT, SUBMITTED].includes(status)) {
+      throw 'invalid review status';
+    }
 
-    console.log('active-editable', this.editable[key]);
+    this.draft[getKey()].status = status;
   },
-  getActiveCloudId() {
-    return this.editable[getActiveKey()].cloudId;
+  getStatus() {
+    const key = getKey();
+    return this.draft[key]?.status;
   },
-  resetActiveDraft() {
-    this.editable[getActiveKey()] = {
-      status: REVIEW_DRAFT,
+  isDraftStatus() {
+    return this.getStatus() === DRAFT;
+  },
+  isSubmittedStatus() {
+    return this.getStatus() === SUBMITTED;
+  },
+  setCloudId(id) {
+    const key = getKey();
+    this.draft[key].cloudId = id;
+
+    console.log('active-editable', this.draft[key]);
+  },
+  getCloudId() {
+    return this.draft[getKey()].cloudId;
+  },
+  resetDraft() {
+    this.draft[getKey()] = {
+      status: DRAFT,
       cloudId: undefined,
       rating: undefined,
       review: undefined,
     };
   },
   hasCloudId() {
-    return !!this.editable[getActiveKey()]?.cloudId;
+    return !!this.draft[getKey()]?.cloudId;
+  },
+  getReadonlyById(cloudId) {
+    const key = getKey();
+    return this.readonly[key]?.find((review) => review.cloudId === cloudId);
+  },
+  blitToDraft(cloudId) {
+    const { rating, review } = this.getReadonlyById(cloudId);
+    const key = getKey();
+
+    this.draft[key] = {
+      status: EDIT,
+      cloudId,
+      rating,
+      review,
+    };
+
+    reload();
   },
 };
 
 // util
 
-function createReviewKey(title, author) {
-  return `${title.replace(/ /g, '_')}&&&${author.replace(/ /g, '_')}`;
-}
-
-function getActiveKey() {
-  return createReviewKey(poems.getTitle(), poems.getAuthor());
+function getKey() {
+  const keyTitle = poems.getTitle().replace(/ /g, '_');
+  const keyAuthor = poems.getAuthor().replace(/ /g, '_');
+  return `${keyTitle}&&&${keyAuthor}`;
 }

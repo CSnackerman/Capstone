@@ -98,7 +98,7 @@ export function addSearchListeners() {
 
     poems.addPoem(poem);
 
-    await reviews.syncActiveReadonlyReviews();
+    await reviews.syncReadonlyReviews();
 
     titleInput.setAttribute('placeholder', 'title');
     authorInput.setAttribute('placeholder', 'author');
