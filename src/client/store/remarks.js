@@ -1,5 +1,5 @@
-import html from 'html-literal';
 import { getRemarksByChunk } from '../network/rhymeRemarksApi.js';
+import { getDateTimeString } from '../utils/dateUtils.js';
 
 export default {
   highlightEnabled: false,
@@ -22,7 +22,7 @@ export default {
         id: _id,
         poster: `@${poster}`,
         comment,
-        postedAt: createPostedAtString(postedAt),
+        postedAt: getDateTimeString(postedAt),
       }));
       return;
     }
@@ -32,7 +32,7 @@ export default {
         id: undefined,
         poster: '@Error',
         comment: 'Something went wrong.',
-        postedAt: createPostedAtString(),
+        postedAt: getDateTimeString(),
       },
     ];
   },
@@ -43,17 +43,3 @@ export default {
     this.highlightEnabled = false;
   },
 };
-
-// util
-
-function createPostedAtString(when = new Date()) {
-  const tz = {
-    timeZone: 'America/Chicago',
-  };
-  const date = new Date(when).toLocaleDateString('en-US', tz);
-  const time = new Date(when).toLocaleTimeString('en-US', tz);
-
-  return html`
-    ${date}<br />${time}
-  `;
-}
