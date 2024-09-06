@@ -1,31 +1,38 @@
 import html from 'html-literal';
+import { reload } from '../../../router.js';
 import store from '../../../store/_index.js';
-import reviewForm, { addReviewFormListeners } from './reviewDraft.js';
-import reviewsReadonly from './reviewsReadonly.js';
-import reviewSubmitted, {
-  addReviewSubmittedListeners,
-} from './reviewSubmitted.js';
+import { DRAFT } from '../../../store/reviews.js';
+import reviewDraft, { addReviewDraftListeners } from './reviewDraft.js';
+import reviewsReadonly, {
+  addReadonlyReviewListeners,
+  refreshReadonlyReviews,
+} from './reviewsReadonly.js';
 
-const { reviews } = store;
+const { reviews, forms } = store;
 
 export default () => {
-  const activeReview = reviews.isSubmittedStatus()
-    ? reviewSubmitted
-    : reviewForm;
-
   // prettier-ignore
   return html`
     <div id="ctx-reviews" class="ctx-component">
-      ${activeReview()}
+      ${reviewDraft()}
       ${reviewsReadonly()}
     </div>
   `;
 };
 
 export function addCtxReviewListeners() {
-  if (reviews.isDraftStatus()) {
-    addReviewFormListeners();
-  } else if (reviews.isSubmittedStatus()) {
-    addReviewSubmittedListeners();
-  }
+  addEventListener(forms.review.refreshEvent.type, async () => {
+    await reviews.syncReadonlyReviews();
+    refreshReadonlyReviews();
+  });
+
+  addEventListener(forms.reviewEdit.refreshEvent.type, async () => {
+    await reviews.syncReadonlyReviews();
+    reviews.setStatus(DRAFT);
+    reviews.resetDraft();
+    reload();
+  });
+
+  addReviewDraftListeners();
+  addReadonlyReviewListeners();
 }

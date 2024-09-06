@@ -2,8 +2,12 @@ import {
   postFeedbackMessage,
   postPoemComposition,
   postRemark,
+  postReview,
+  updateReviewById,
 } from '../network/rhymeRemarksApi.js';
+import poems from './poems.js';
 import remarks from './remarks.js';
+import reviews from './reviews.js';
 
 export default {
   remark: {
@@ -99,6 +103,63 @@ export default {
       base: 'Publish',
       pending: 'Publishing ⏳',
       success: 'Published ✅',
+      Failure: 'Failed ⛔',
+    },
+  },
+  // ---
+  review: {
+    fields: [
+      {
+        name: 'review',
+        label: null,
+        inputType: 'textarea',
+        attributes: { required: true, placeholder: 'Type your review...' },
+      },
+    ],
+    additionalData: {
+      title: () => poems.getTitle(),
+      author: () => poems.getAuthor(),
+      rating: () => reviews.getRating(),
+      postedAt: () => new Date(),
+    },
+    dataDefaults: {},
+    postRequestCallback: postReview,
+    refreshEvent: new Event('refresh-review'),
+    submitButton: {
+      base: 'Publish',
+      pending: 'Publishing ⏳',
+      success: 'Published ✅',
+      Failure: 'Failed ⛔',
+    },
+  },
+  // ---
+  reviewEdit: {
+    fields: [
+      {
+        name: 'review',
+        label: null,
+        inputType: 'textarea',
+        attributes: {
+          required: true,
+          placeholder: 'Type your review...',
+        },
+        value: () => reviews.getReview(),
+      },
+    ],
+    additionalData: {
+      title: () => poems.getTitle(),
+      author: () => poems.getAuthor(),
+      rating: () => reviews.getRating(),
+      postedAt: () => new Date(),
+    },
+    dataDefaults: {},
+    postRequestCallback: async (requestBody) =>
+      await updateReviewById(reviews.getCloudId(), requestBody),
+    refreshEvent: new Event('refresh-review-edit'),
+    submitButton: {
+      base: 'Update',
+      pending: 'Updating ⏳',
+      success: 'Updated ✅',
       Failure: 'Failed ⛔',
     },
   },

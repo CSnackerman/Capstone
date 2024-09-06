@@ -3,11 +3,12 @@ import store from '../store/_index.js';
 
 const { forms } = store;
 
-export default (id) => {
+export default (id, pseudoId = undefined) => {
   const config = forms[id];
 
+  // prettier-ignore
   const getInputHtml = (field) => {
-    const { name, attributes, inputType } = field;
+    const { name, attributes, inputType, value } = field;
 
     const attributesHtml = Object.entries(attributes)
       .map(([attribute, value]) =>
@@ -20,17 +21,18 @@ export default (id) => {
     return inputType === 'textarea'
       ? html`
           <textarea
-            id="${id}-${name}-textarea"
+            id="${pseudoId ?? id}-${name}-textarea"
             name="${name}"
             ${attributesHtml}
-          ></textarea>
+          >${value ? value() : ''}</textarea>
         `
       : html`
           <input
-            id="${id}-${name}-${inputType}-input"
+            id="${pseudoId ?? id}-${name}-${inputType}-input"
             name="${name}"
             type="${inputType}"
             ${attributesHtml}
+            ${value ? `value="${value()}"` : ''}
           />
         `;
   };
@@ -43,24 +45,25 @@ export default (id) => {
       : '';
 
   const getInputFieldsHtml = () =>
-    config.fields.map(
-      (field) =>
-        html`
-          <label id="${id}-${field.name}-label">
-            <span>${field.label} ${getOptionalSpan(field)}</span>
-            ${getInputHtml(field)}
-          </label>
-        `
+    config.fields.map((field) =>
+      field.label
+        ? html`
+            <label id="${pseudoId ?? id}-${field.name}-label">
+              <span>${field.label} ${getOptionalSpan(field)}</span>
+              ${getInputHtml(field)}
+            </label>
+          `
+        : getInputHtml(field)
     );
 
   return html`
     <form
-      id="${id}-form-ex"
+      id="${pseudoId ?? id}-form-ex"
       ${config.applyDefaultStyles ? 'class="default-form-ex"' : ''}
     >
       ${getInputFieldsHtml()}
       <input
-        id="${id}-form-ex-submit"
+        id="${pseudoId ?? id}-form-ex-submit"
         type="submit"
         value="${config.submitButton.base}"
       />
@@ -70,13 +73,13 @@ export default (id) => {
 
 // ---
 
-export function addFormExEventListeners(id) {
+export function addFormExEventListeners(id, pseudoId) {
   const config = forms[id];
 
   const { base, pending, success, failure } = config.submitButton;
 
-  const form = document.getElementById(`${id}-form-ex`);
-  const submitBtn = document.getElementById(`${id}-form-ex-submit`);
+  const form = document.getElementById(`${pseudoId ?? id}-form-ex`);
+  const submitBtn = document.getElementById(`${pseudoId ?? id}-form-ex-submit`);
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -121,8 +124,8 @@ export function addFormExEventListeners(id) {
 
     if (res.ok) {
       submitBtn.value = success;
-      if (config.refreshEventId) {
-        dispatchEvent(new Event(config.refreshEventId));
+      if (config.refreshEvent) {
+        dispatchEvent(config.refreshEvent);
       }
       form.reset();
     } else {

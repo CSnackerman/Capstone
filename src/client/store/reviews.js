@@ -1,11 +1,13 @@
 import { getReviewsByTitleAuthor } from '../network/rhymeRemarksApi.js';
+import { reload } from '../router.js';
 import poems from './poems.js';
 
 export const DRAFT = 'draft';
+export const EDIT = 'edit';
 export const SUBMITTED = 'submitted';
 
 export default {
-  editable: {},
+  draft: {},
   readonly: {},
   activeAvgRating: undefined,
 
@@ -19,17 +21,26 @@ export default {
     const reviews = await res.json();
 
     const key = getKey();
-    const stripIdentifiers = ({ rating, review }) => ({ rating, review });
-    this.readonly[key] = reviews.map(stripIdentifiers);
+    const desiredProps = ({ _id, rating, review, postedAt }) => ({
+      cloudId: _id,
+      rating,
+      review,
+      postedAt,
+    });
+    this.readonly[key] = reviews.map(desiredProps);
     this.activeAvgRating = this.calcReadonlyAvgRating();
   },
   isReadonlySynced() {
     return getKey() in this.readonly;
   },
-  getReadonlyReviews() {
+  getSortedReadonlyReviews() {
     const key = getKey();
 
-    return this.readonly[key] ?? [];
+    const readonlyReviews = this.readonly[key] ?? [];
+
+    readonlyReviews.sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+
+    return readonlyReviews;
   },
   getReadonlyReviewCount() {
     const key = getKey();
@@ -47,7 +58,7 @@ export default {
 
     if (!exists) return 0;
 
-    const reviews = this.getReadonlyReviews();
+    const reviews = this.getSortedReadonlyReviews();
 
     const totalStars = reviews.reduce(
       (runningTotal, review) => (runningTotal += review.rating),
@@ -65,60 +76,59 @@ export default {
   getReadonlyAvgRating() {
     return this.activeAvgRating;
   },
-
-  // editable methods
   initEditableEntry() {
     const key = getKey();
 
-    if (key in this.editable) return;
+    if (key in this.draft) return;
 
-    this.editable[key] = {
+    this.draft[key] = {
       status: DRAFT,
       cloudId: undefined,
       rating: undefined,
       review: undefined,
+      postedAt: undefined,
     };
   },
   setReview(review) {
     const key = getKey();
 
-    if (key in this.editable) {
-      this.editable[key].review = review;
+    if (key in this.draft) {
+      this.draft[key].review = review;
       return;
     }
   },
   setRating(rating) {
     const key = getKey();
 
-    if (key in this.editable) {
-      this.editable[key].rating = rating;
+    if (key in this.draft) {
+      this.draft[key].rating = rating;
       return;
     }
   },
   clearRating() {
     const key = getKey();
-    if (key in this.editable) {
-      this.editable[key].rating = undefined;
+    if (key in this.draft) {
+      this.draft[key].rating = undefined;
     }
   },
   getReview() {
     const key = getKey();
-    return this.editable[key]?.review;
+    return this.draft[key]?.review;
   },
   getRating() {
     const key = getKey();
-    return this.editable[key]?.rating;
+    return this.draft[key]?.rating;
   },
   setStatus(status) {
     if (![DRAFT, SUBMITTED].includes(status)) {
       throw 'invalid review status';
     }
 
-    this.editable[getKey()].status = status;
+    this.draft[getKey()].status = status;
   },
   getStatus() {
     const key = getKey();
-    return this.editable[key]?.status;
+    return this.draft[key]?.status;
   },
   isDraftStatus() {
     return this.getStatus() === DRAFT;
@@ -128,15 +138,15 @@ export default {
   },
   setCloudId(id) {
     const key = getKey();
-    this.editable[key].cloudId = id;
+    this.draft[key].cloudId = id;
 
-    console.log('active-editable', this.editable[key]);
+    console.log('active-editable', this.draft[key]);
   },
   getCloudId() {
-    return this.editable[getKey()].cloudId;
+    return this.draft[getKey()].cloudId;
   },
   resetDraft() {
-    this.editable[getKey()] = {
+    this.draft[getKey()] = {
       status: DRAFT,
       cloudId: undefined,
       rating: undefined,
@@ -144,7 +154,24 @@ export default {
     };
   },
   hasCloudId() {
-    return !!this.editable[getKey()]?.cloudId;
+    return !!this.draft[getKey()]?.cloudId;
+  },
+  getReadonlyById(cloudId) {
+    const key = getKey();
+    return this.readonly[key]?.find((review) => review.cloudId === cloudId);
+  },
+  blitToDraft(cloudId) {
+    const { rating, review } = this.getReadonlyById(cloudId);
+    const key = getKey();
+
+    this.draft[key] = {
+      status: EDIT,
+      cloudId,
+      rating,
+      review,
+    };
+
+    reload();
   },
 };
 
