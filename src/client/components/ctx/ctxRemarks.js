@@ -34,10 +34,10 @@ function getCommentsHtml() {
   return remarks.comments
     .map(
       (comment) => html`
-        <div id="remark-readonly-comment">
-          <div id="remark-readonly-comment-poster">${comment.poster}</div>
-          <div id="remark-readonly-comment-date">${comment.postedAt}</div>
-          <div id="remark-readony-comment-content">${comment.comment}</div>
+        <div class="remark-readonly-comment">
+          <div class="remark-readonly-comment-poster">${comment.poster}</div>
+          <div class="remark-readonly-comment-date">${comment.postedAt}</div>
+          <div class="remark-readony-comment-content">${comment.comment}</div>
         </div>
       `
     )
