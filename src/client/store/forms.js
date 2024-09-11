@@ -28,7 +28,7 @@ export default {
     additionalData: { chunk: () => remarks.getSanitizedChunk() },
     dataDefaults: { poster: 'anonymous' },
     postRequestCallback: postRemark,
-    refreshEventId: 'refresh-remark',
+    refreshEvent: new Event('refresh-remark'),
     submitButton: {
       base: 'Publish',
       pending: 'Publishing ⏳',
@@ -61,7 +61,7 @@ export default {
     additionalData: {},
     dataDefaults: {},
     postRequestCallback: postFeedbackMessage,
-    refreshEventId: null,
+    refreshEvent: null,
     submitButton: {
       base: 'Send',
       pending: 'Sending ⏳',
@@ -98,7 +98,7 @@ export default {
     additionalData: {},
     dataDefaults: {},
     postRequestCallback: postPoemComposition,
-    refreshEventId: null,
+    refreshEvent: null,
     submitButton: {
       base: 'Publish',
       pending: 'Publishing ⏳',

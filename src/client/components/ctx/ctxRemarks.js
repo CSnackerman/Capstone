@@ -22,7 +22,7 @@ export default () => {
 export function addCtxRemarksListeners() {
   addFormExEventListeners('remark');
 
-  addEventListener(forms.remark.refreshEventId, async () => {
+  addEventListener(forms.remark.refreshEvent.type, async () => {
     await remarks.syncComments();
     document.getElementById('remark-comments').innerHTML = getCommentsHtml();
   });
