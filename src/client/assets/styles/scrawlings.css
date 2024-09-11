@@ -9,9 +9,9 @@
   color: #ffffff25;
   line-height: 1.5;
   letter-spacing: 1.4;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   animation: scrolldown 100s linear infinite;
-  filter: blur(1px);
+
   user-select: none;
   pointer-events: none;
 }

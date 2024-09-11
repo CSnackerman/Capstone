@@ -1,11 +1,10 @@
 import html from 'html-literal';
 import { deleteReviewById } from '../../../network/rhymeRemarksApi.js';
 import store from '../../../store/_index.js';
-import forms from '../../../store/forms.js';
 import { getDateTimeString } from '../../../utils/dateUtils.js';
 import stars, { LIGHT, READONLY } from './stars.js';
 
-const { reviews } = store;
+const { reviews, forms } = store;
 
 export default () => {
   const empty = reviews.getReadonlyReviewCount() === 0 ? 'class="empty"' : '';
